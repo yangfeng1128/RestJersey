@@ -20,7 +20,7 @@ public class MongoConnection {
 		return mongoConnection;
 	}
 	
-	public static MongoClient getClient()
+	public MongoClient getClient()
 	{
 		return mongoClient;
 	}
