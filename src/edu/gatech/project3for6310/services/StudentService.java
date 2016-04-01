@@ -1,6 +1,7 @@
 package edu.gatech.project3for6310.services;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -29,6 +30,7 @@ public class StudentService {
 	
 	@Inject
 	private static StudentDAO studentDAO;
+	private static SimulationService simulationService = SimulationService.getInstance();
 	
 	@Path("/all")
 	@GET
@@ -36,10 +38,10 @@ public class StudentService {
 	public Response getAllStudents(){
 		
 		List<Document> students =studentDAO.getAllStudents();
-		StringBuilder sb = new StringBuilder();
+		JSONObject sb = new JSONObject();
 		for(Document d:students)
 		{
-			sb.append(d.toJson());
+			sb.append(d.getString("id"),d.toJson());
 		}
 		return Response.status(200).entity(sb.toString()).build();
 	}
@@ -47,7 +49,7 @@ public class StudentService {
 	@Path("/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getOneStudent(@PathParam("id") int id){
+	public Response getOneStudent(@PathParam("id") String id){
 		
 		Document student =studentDAO.getOneStudent(id);
 		return Response.status(200).entity(student.toJson()).build();
@@ -57,17 +59,22 @@ public class StudentService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateStudentChoice(Student student){
-		
-	    Document success=studentDAO.updateStudent(student);
+	public Response updateStudentChoice(@PathParam("id") String id, Student student){
+		String requestId ="Student_"+id+"_"+String.valueOf(System.currentTimeMillis());
+		student.setIsSimulated(false);
+		student.setRequestId(requestId);
+		boolean success=studentDAO.updateStudent(id, student);
+		simulationService.addStudentRequest(requestId);
 	    String res = null;
-	    if (success != null)
+	    if (success != true)
 	    {
 	    	res="updated successfully";
+	    	return Response.status(200).entity(res).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
+	    	return Response.status(400).header("isUpdated", success).build();
 	    }
-		return Response.status(200).entity(res).build();
+		
 	}
 	
 	
