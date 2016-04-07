@@ -34,6 +34,11 @@ public class StudentDAO {
 	public Document getOneStudent(String id) {
 		return studentCollection.find(eq("id",id)).first();
 	}
+	public void saveOneStudent(Document doc)
+	{
+		
+		studentCollection.insertOne(doc);
+	}
 
 	public boolean updateStudent(String id,Student student) {
 		try{
@@ -46,5 +51,6 @@ public class StudentDAO {
 		}
 		
 	}
+	
 	
 }

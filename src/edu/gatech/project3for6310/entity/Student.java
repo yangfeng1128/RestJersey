@@ -15,11 +15,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class Student {
     private String id;
+    private String fullName;
 	private int numDesiredCourse;
     private Map<String, Integer> preferredCources;
     private String requestId;
     private List<String> rcmCources;
     private boolean isSimulated;
+    private List<String> courseTaken;
+    
+    
+    
+    
+    public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public List<String> getCourseTaken() {
+		return courseTaken;
+	}
+
+	public void setCourseTaken(List<String> courseTaken) {
+		this.courseTaken = courseTaken;
+	}
+
+	
+ 
 
     public String getRequestId() {
 		return requestId;

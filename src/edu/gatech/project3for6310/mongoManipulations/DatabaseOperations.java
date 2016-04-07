@@ -30,7 +30,7 @@ public class DatabaseOperations {
 				.append("studentID","04567")); */
 		List<String> li = new ArrayList<String>();
 		li.add("6550"); 
-		studentCollection.deleteOne(eq("id","04568"));
+		studentCollection.deleteMany(eq("id","04568"));
 		studentCollection.insertOne(new Document().append("id", "04568")		
 				.append("numDesiredCourse", 1)
 				.append("preferredCources", new Document().append("6550", 1).append("6250", 2))

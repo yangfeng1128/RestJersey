@@ -24,6 +24,7 @@ import com.sun.jersey.spi.inject.Inject;
 import edu.gatech.project3for6310.dao.StudentDAO;
 import edu.gatech.project3for6310.dbconnection.MongoConnection;
 import edu.gatech.project3for6310.entity.Student;
+import edu.gatech.project3for6310.utils.ObjectConversion;
 
 @Path("/student")
 public class StudentService {
@@ -52,6 +53,14 @@ public class StudentService {
 	public Response getOneStudent(@PathParam("id") String id){
 		
 		Document student =studentDAO.getOneStudent(id);
+		if(student ==null)
+		{
+			Student newStudent = new Student();
+			newStudent.setId(id);
+			Document doc = ObjectConversion.studentToDocument(newStudent);
+			studentDAO.saveOneStudent(doc);
+			return Response.status(200).entity(doc.toJson()).build();
+		}
 		return Response.status(200).entity(student.toJson()).build();
 	}
 	

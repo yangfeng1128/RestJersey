@@ -17,17 +17,22 @@ public class ObjectConversion {
 		Document studentDoc = new Document();
 		Document studentCs= new Document();
 		Map<String,Integer> studentCourses = student.getPreferredCources();
-		for (Map.Entry<String, Integer> entry:studentCourses.entrySet())
+		if (studentCourses !=null)
 		{
-			studentCs.append(entry.getKey(), entry.getValue());
+			for (Map.Entry<String, Integer> entry:studentCourses.entrySet())
+			{
+				studentCs.append(entry.getKey(), entry.getValue());
+			}
 		}
-		
+
 		studentDoc.append("id",student.getId())
+					.append("fullName", student.getFullName())
 		           .append("numDesiredCourse", student.getNumDesiredCourse())
 				   .append("preferredCources", studentCs)
 				   .append("requestId",student.getRequestId())
 				   .append("rcmCources",student.getRcmCources())
-				   .append("isSimulated", student.getIsSimulated());
+				   .append("isSimulated", student.getIsSimulated())
+				   .append("courseTaken", student.getCourseTaken());
 		
 		return studentDoc;
 	}
@@ -42,12 +47,15 @@ public class ObjectConversion {
 			courseMap.put(entry.getKey(), (Integer)entry.getValue());
 		}
 		List<String> rcmCourses = (List<String>) doc.get("rcmCources");
+		List<String> courseTaken = (List<String>) doc.get("courseTaken");
 		stu.setId(doc.getString("id"));
+		stu.setFullName(doc.getString("fullName"));
 		stu.setNumDesiredCourse(doc.getInteger("numDesiredCourse"));
 		stu.setPreferredCources(courseMap);
 		stu.setRequestId(doc.getString("requestId"));
 		stu.setRcmCources(rcmCourses);
 		stu.setIsSimulated(doc.getBoolean("isSimulated"));
+		stu.setCourseTaken(courseTaken);
 		return stu;
 	}
 }
