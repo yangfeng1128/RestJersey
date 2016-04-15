@@ -1,5 +1,5 @@
 package edu.gatech.project3for6310.entity;
 
-public class Log {
+public class SimulationRecord {
 
 }
