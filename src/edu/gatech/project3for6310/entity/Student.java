@@ -16,8 +16,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Student {
     private String id;
     private String fullName;
+    private String email;
 	private int numDesiredCourse;
-    private Map<String, Integer> preferredCources;
+    private List<String> preferredCources;
     private String requestId;
     private List<String> rcmCources;
     private boolean isSimulated;
@@ -26,7 +27,19 @@ public class Student {
     
     
     
-    public String getFullName() {
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPreferredCources(List<String> preferredCources) {
+		this.preferredCources = preferredCources;
+	}
+
+	public String getFullName() {
 		return fullName;
 	}
 
@@ -78,13 +91,6 @@ public class Student {
 		this.id = id;
 	}
 
-	public Map<String, Integer> getPreferredCources() {
-		return preferredCources;
-	}
-
-	public void setPreferredCources(Map<String, Integer> preferredCources) {
-		this.preferredCources = preferredCources;
-	}
 
 
 	public List<String> getRcmCources() {
@@ -93,6 +99,73 @@ public class Student {
 
 	public void setRcmCources(List<String> rcmCources) {
 		this.rcmCources = rcmCources;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((courseTaken == null) ? 0 : courseTaken.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (isSimulated ? 1231 : 1237);
+		result = prime * result + numDesiredCourse;
+		result = prime * result + ((preferredCources == null) ? 0 : preferredCources.hashCode());
+		result = prime * result + ((rcmCources == null) ? 0 : rcmCources.hashCode());
+		result = prime * result + ((requestId == null) ? 0 : requestId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (courseTaken == null) {
+			if (other.courseTaken != null)
+				return false;
+		} else if (!courseTaken.equals(other.courseTaken))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (fullName == null) {
+			if (other.fullName != null)
+				return false;
+		} else if (!fullName.equals(other.fullName))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (isSimulated != other.isSimulated)
+			return false;
+		if (numDesiredCourse != other.numDesiredCourse)
+			return false;
+		if (preferredCources == null) {
+			if (other.preferredCources != null)
+				return false;
+		} else if (!preferredCources.equals(other.preferredCources))
+			return false;
+		if (rcmCources == null) {
+			if (other.rcmCources != null)
+				return false;
+		} else if (!rcmCources.equals(other.rcmCources))
+			return false;
+		if (requestId == null) {
+			if (other.requestId != null)
+				return false;
+		} else if (!requestId.equals(other.requestId))
+			return false;
+		return true;
 	}
 
     
