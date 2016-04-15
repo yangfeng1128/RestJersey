@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,7 +27,7 @@ import edu.gatech.project3for6310.dbconnection.MongoConnection;
 import edu.gatech.project3for6310.entity.Student;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
-@Path("/student")
+@Path("/students")
 public class StudentService {
 	
 	@Inject
@@ -55,11 +56,14 @@ public class StudentService {
 		Document student =studentDAO.getOneStudent(id);
 		if(student ==null)
 		{
+			/*
 			Student newStudent = new Student();
 			newStudent.setId(id);
 			Document doc = ObjectConversion.studentToDocument(newStudent);
-			studentDAO.saveOneStudent(doc);
+			courseDAO.saveOneStudent(doc);
 			return Response.status(200).entity(doc.toJson()).build();
+			*/
+			return Response.status(400).build();
 		}
 		return Response.status(200).entity(student.toJson()).build();
 	}
@@ -68,7 +72,7 @@ public class StudentService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateStudentChoice(@PathParam("id") String id, Student student){
+	public Response updateStudent(@PathParam("id") String id, Student student){
 		String requestId ="Student_"+id+"_"+String.valueOf(System.currentTimeMillis());
 		student.setIsSimulated(false);
 		student.setRequestId(requestId);
@@ -85,6 +89,7 @@ public class StudentService {
 	    }
 		
 	}
+	
 	
 	
 

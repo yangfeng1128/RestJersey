@@ -4,9 +4,17 @@ import java.util.List;
 
 public class Professor {
  private String id;
+ private boolean isShadow;
  private String fullName;
  private List<String> capableCourses;
  private List<String> courseAssigned;
+ 
+public boolean getIsShadow() {
+	return isShadow;
+}
+public void setIsShadow(boolean isShadow) {
+	this.isShadow = isShadow;
+}
 public String getId() {
 	return id;
 }

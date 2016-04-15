@@ -24,7 +24,7 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response VerifyUser(@PathParam("username") String username, @PathParam("password") String password)
 	{
-		Document user = userDAO.getOneUser(username);
+		Document user = userDAO.getOneUser(username);		
 		String storedPassword = null;
 		if (user !=null)
 		{
@@ -33,6 +33,7 @@ public class UserService {
 		boolean isVerified = false;
 		if (password!=null && password.equals(storedPassword))
 		{
+			user.put("password", "N.A");
 			isVerified=true;
 		}
 		if (isVerified ==true)
