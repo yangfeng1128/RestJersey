@@ -12,7 +12,7 @@ public class Course {
  List<String> assignedTA;
  List<String> prerequisites;
  
-public boolean geIsShadow() {
+public boolean getIsShadow() {
 	return isShadow;
 }
 public void setIsShadow(boolean isShadow) {

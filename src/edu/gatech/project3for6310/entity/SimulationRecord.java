@@ -8,11 +8,12 @@ public class SimulationRecord {
   private String id;
   private boolean isShadowMode;
   private String adminId;
-  private Timestamp simulatedTime;
+  private String simulatedTime;
   private Map<String,String[]> studentPreference;
   private Map<String, List<String>> courseRecommended;
   private Map<String, String> professorAssignment;
   private Map<String, List<String>> tAAssignment;
+  
 public String getId() {
 	return id;
 }
@@ -31,10 +32,10 @@ public String getAdminId() {
 public void setAdminId(String adminId) {
 	this.adminId = adminId;
 }
-public Timestamp getSimulatedTime() {
+public String getSimulatedTime() {
 	return simulatedTime;
 }
-public void setSimulatedTime(Timestamp simulatedTime) {
+public void setSimulatedTime(String simulatedTime) {
 	this.simulatedTime = simulatedTime;
 }
 public Map<String, String[]> getStudentPreference() {
