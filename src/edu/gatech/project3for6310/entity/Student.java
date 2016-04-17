@@ -34,7 +34,11 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public List<String> getPreferredCources() {
+		return this.preferredCources;
+	}
 
+	
 	public void setPreferredCources(List<String> preferredCources) {
 		this.preferredCources = preferredCources;
 	}
@@ -167,6 +171,7 @@ public class Student {
 			return false;
 		return true;
 	}
+
 
     
 

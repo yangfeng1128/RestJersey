@@ -5,8 +5,17 @@ import java.util.List;
 public class TeachingAssistant {
 
 	private String id;
+	private boolean isShadow;
 	private List<String> capableCourses;
 	String courseAssigned;
+	
+	
+	public boolean getIsShadow() {
+		return isShadow;
+	}
+	public void setIsShadow(boolean isShadow) {
+		this.isShadow = isShadow;
+	}
 	public String getId() {
 		return id;
 	}

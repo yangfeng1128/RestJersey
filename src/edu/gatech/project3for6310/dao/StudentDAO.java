@@ -15,42 +15,33 @@ import static com.mongodb.client.model.Filters.*;
 
 import edu.gatech.project3for6310.dbconnection.MongoConnection;
 import edu.gatech.project3for6310.entity.Student;
+import edu.gatech.project3for6310.entity.Student;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
 public class StudentDAO {
-	private static MongoConnection conn = MongoConnection.getInstance();
-	private static MongoCollection<Document> studentCollection;
-	public StudentDAO()
-	{
-		studentCollection = conn.getCollection("student");
-	}
-	
-	public List<Document> getAllStudents()
-	{
+	private static BasicDAO<Student> dao = new BasicDAO<Student>(Student.class);
+	public List<Document> getAllStudents() {
+		return dao.getAll();
 		
-		return studentCollection.find().into(new ArrayList<Document>());
 	}
 
 	public Document getOneStudent(String id) {
-		return studentCollection.find(eq("id",id)).first();
+		return dao.getById(id);
 	}
+
+	public boolean updateStudent(String id, Student student) {
+		Document doc = ObjectConversion.studentToDocument(student);
+		dao.updateById(id, doc);
+		return true;
+	}
+	
 	public void saveOneStudent(Document doc)
 	{
 		
-		studentCollection.insertOne(doc);
+		dao.save(doc);
 	}
 
-	public boolean updateStudent(String id,Student student) {
-		try{
-		Document updatedStudent = ObjectConversion.studentToDocument(student);
-		UpdateResult doc=studentCollection.replaceOne(eq("id",id), updatedStudent);
-		return true;
-		} catch(MongoException e)
-		{
-			return false;
-		}
-		
-	}
+	
 	
 	
 }

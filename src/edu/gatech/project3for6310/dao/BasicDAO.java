@@ -26,7 +26,7 @@ public class BasicDAO<T> {
 		String cn = c.substring(p+1);
 		System.out.println(cn);
 		collection=conn.getCollection(cn);
-		collection.createIndex(new Document("id",1));
+	//	collection.createIndex(new Document("id",1));
 	}
 	
 	public void save(Document doc)
@@ -54,12 +54,16 @@ public class BasicDAO<T> {
 	 
 		return list;
 	}
-	
+	public Document getByUserName(String username) {
+		return collection.find(eq("username", username)).first();
+	}
 	
 	public static void main(String[] args)
 	{
 		BasicDAO<Student> s= new BasicDAO<Student>(Student.class);
 	    System.out.println(s.collection.find(eq("id","04569")).first());
 	}
+
+
 }
  

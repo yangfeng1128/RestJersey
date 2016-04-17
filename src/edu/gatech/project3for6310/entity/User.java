@@ -14,7 +14,6 @@ public class User {
   private String password;
   private String role;
   private boolean isAdmin;
-  private String uID;
 public String getId() {
 	return id;
 }
@@ -57,12 +56,8 @@ public boolean isAdmin() {
 public void setAdmin(boolean isAdmin) {
 	this.isAdmin = isAdmin;
 }
-public String getuID() {
-	return uID;
-}
-public void setuID(String uID) {
-	this.uID = uID;
-}
+
+
 @Override
 public int hashCode() {
 	final int prime = 31;
@@ -73,7 +68,6 @@ public int hashCode() {
 	result = prime * result + (isAdmin ? 1231 : 1237);
 	result = prime * result + ((password == null) ? 0 : password.hashCode());
 	result = prime * result + ((role == null) ? 0 : role.hashCode());
-	result = prime * result + ((uID == null) ? 0 : uID.hashCode());
 	result = prime * result + ((username == null) ? 0 : username.hashCode());
 	return result;
 }
@@ -112,11 +106,6 @@ public boolean equals(Object obj) {
 		if (other.role != null)
 			return false;
 	} else if (!role.equals(other.role))
-		return false;
-	if (uID == null) {
-		if (other.uID != null)
-			return false;
-	} else if (!uID.equals(other.uID))
 		return false;
 	if (username == null) {
 		if (other.username != null)
