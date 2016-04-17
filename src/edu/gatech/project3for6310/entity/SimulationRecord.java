@@ -1,6 +1,6 @@
 package edu.gatech.project3for6310.entity;
 
-import java.sql.Timestamp;
+
 import java.util.List;
 import java.util.Map;
 
@@ -56,10 +56,10 @@ public Map<String, String> getProfessorAssignment() {
 public void setProfessorAssignment(Map<String, String> professorAssignment) {
 	this.professorAssignment = professorAssignment;
 }
-public Map<String, List<String>> gettAAssignment() {
+public Map<String, List<String>> getTAAssignment() {
 	return tAAssignment;
 }
-public void settAAssignment(Map<String, List<String>> tAAssignment) {
+public void setTAAssignment(Map<String, List<String>> tAAssignment) {
 	this.tAAssignment = tAAssignment;
 }
 @Override

@@ -1,11 +1,10 @@
 package edu.gatech.project3for6310.utils;
 
-import java.sql.Timestamp;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.bson.Document;
 
@@ -131,6 +130,7 @@ public class ObjectConversion {
 		professor.setCourseAssigned(courseAssigned);
 		return professor;
 	}
+	
 	public static Document teachingAssistantToDocument(TeachingAssistant teachingAssistant) {
 		Document teachingAssistantDoc = new Document();
 		teachingAssistantDoc.append("id",teachingAssistant.getId())
@@ -151,17 +151,107 @@ public class ObjectConversion {
 		return teachingassistant;
 	}
 	
+	public static Document simulationRecordToDocument(SimulationRecord simulationRecord) {
+		Document simulationRecordDoc = new Document();
+		Document studentPreference= null;
+		Map<String,String[]> sPreferences= simulationRecord.getStudentPreference();
+		if (sPreferences !=null)
+		{
+			studentPreference=new Document();	
+			for (Map.Entry<String,String[]> entry:sPreferences.entrySet())
+			{
+				studentPreference.append(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		Document courseRecommended= null;
+		Map<String,List<String>> cRecommended= simulationRecord.getCourseRecommended();
+		if (cRecommended !=null)
+		{
+			courseRecommended=new Document();	
+			for (Map.Entry<String,List<String>> entry:cRecommended.entrySet())
+			{
+				courseRecommended.append(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		Document professorAssignment= null;
+		Map<String,String> pAssignment= simulationRecord.getProfessorAssignment();
+		if (pAssignment !=null)
+		{
+			professorAssignment=new Document();	
+			for (Map.Entry<String,String> entry:pAssignment.entrySet())
+			{
+				professorAssignment.append(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		Document tAAssignment= null;
+		Map<String,List<String>> tAssignment= simulationRecord.getTAAssignment();
+		if (tAssignment !=null)
+		{
+			tAAssignment=new Document();	
+			for (Map.Entry<String,List<String>> entry:tAssignment.entrySet())
+			{
+				tAAssignment.append(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		
+		simulationRecordDoc.append("id",simulationRecord.getId())
+				   .append("isShadowMode", simulationRecord.getIsShadowMode())
+				   .append("adminId", simulationRecord.getAdminId())
+				   .append("simulatedTime",simulationRecord.getSimulatedTime())
+		           .append("studentPreference", studentPreference)
+		           .append("courseRecommended", courseRecommended)
+		           .append("professorAssignment", professorAssignment)
+		           .append("tAAssignment", tAAssignment);		
+		return simulationRecordDoc;
+	}
+	
+	
 	public static SimulationRecord documentToSimulationRecord(Document doc)
 	{
 		SimulationRecord simulationRecord = new SimulationRecord();
 		Map<String, String[]> studentPreference = new HashMap<String, String[]>();
+		Document sPreference = (Document) doc.get("studentPreference");
+		for(Entry<String, Object> entry: sPreference.entrySet())
+		{
+			String[] courses =(String[])entry.getValue();
+			studentPreference.put(entry.getKey(),courses );
+		}
 		
+		Map<String, List<String>> courseRecommended = new HashMap<String, List<String>>();
+		Document cRecommend = (Document) doc.get("courseRecommended");
+		for(Entry<String, Object> entry: cRecommend.entrySet())
+		{
+			List<String> courses =(List<String>)entry.getValue();
+			courseRecommended.put(entry.getKey(),courses );
+		}
+		
+		Map<String, String> professorAssignment = new HashMap<String, String>();
+		Document pAssignment = (Document) doc.get("professorAssignment");
+		for(Entry<String, Object> entry: pAssignment.entrySet())
+		{
+			String p =(String)entry.getValue();
+			professorAssignment.put(entry.getKey(),p );
+		}
+		
+		Map<String, List<String>> tAAssignment = new HashMap<String, List<String>>();
+		Document tAssignment= (Document) doc.get("tAAssignment");
+		for(Entry<String, Object> entry: tAssignment.entrySet())
+		{
+			List<String> courses =(List<String>)entry.getValue();
+			tAAssignment.put(entry.getKey(),courses );
+		}
 		simulationRecord.setId(doc.getString("id"));
 		simulationRecord.setIsShadowMode(doc.getBoolean("isShadowMode"));
 		simulationRecord.setSimulatedTime(doc.getString("simulatedTime"));
 		
-		simulationRecord.setCapableCourses(capableCourses);
-		simulationRecord.setCourseAssigned(courseAssigned);
+		simulationRecord.setStudentPreference(studentPreference);
+		simulationRecord.setCourseRecommended(courseRecommended);
+		simulationRecord.setProfessorAssignment(professorAssignment);
+		simulationRecord.setTAAssignment(tAAssignment);
 		return simulationRecord;
 	}
 	
