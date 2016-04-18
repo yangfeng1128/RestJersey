@@ -29,6 +29,16 @@ public class TeachingAssistantDAO {
 			return false;
 		}
 	}
+	public void updateTeachingAssistant(String id,Document doc) {
+		try{
+	
+		dao.updateById(id, doc);
+
+		} catch (Exception e)
+		{
+
+		}
+	}
 
 
 	public boolean createTeachingAssistant(String id, TeachingAssistant teachingAssistant) {
@@ -41,6 +51,7 @@ public class TeachingAssistantDAO {
 			return false;
 		}
 	}
+	
 
 	public boolean deleteTeachingAssistant(String id) {
 		try{

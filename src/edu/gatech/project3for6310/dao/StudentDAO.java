@@ -51,6 +51,10 @@ public class StudentDAO {
 		}
 	}
 
+	public void updateStudent(String id, Document sDoc) {
+		dao.updateById(id, sDoc);	
+	}
+
 	
 	
 	

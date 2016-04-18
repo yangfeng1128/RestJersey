@@ -16,7 +16,7 @@ public class SimulationRecord {
   private String id;
   private String adminId;
   private String simulatedTime;
-  private Map<String,String[]> studentPreference;
+  private Map<String,List<String>> studentPreference;
   private Map<String, List<String>> courseRecommended;
   private Map<String, String> professorAssignment;
   private Map<String, List<String>> tAAssignment;
@@ -40,10 +40,10 @@ public String getSimulatedTime() {
 public void setSimulatedTime(String simulatedTime) {
 	this.simulatedTime = simulatedTime;
 }
-public Map<String, String[]> getStudentPreference() {
+public Map<String, List<String>> getStudentPreference() {
 	return studentPreference;
 }
-public void setStudentPreference(Map<String, String[]> studentPreference) {
+public void setStudentPreference(Map<String, List<String>> studentPreference) {
 	this.studentPreference = studentPreference;
 }
 public Map<String, List<String>> getCourseRecommended() {

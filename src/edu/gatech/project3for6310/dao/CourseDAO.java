@@ -30,5 +30,14 @@ public class CourseDAO {
 		return false;
 		}
 	}
+	public void updateCourse(String id,Document doc) {
+		try{
+	
+		dao.updateById(id, doc);
 
+		} catch(Exception e)
+		{
+
+		}
+	}
 }

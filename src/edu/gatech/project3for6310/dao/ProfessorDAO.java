@@ -31,4 +31,16 @@ public class ProfessorDAO {
 		}
 	}
 
+	public void updateProfessor(String id, Document pDoc) {
+		try{
+		
+			dao.updateById(id, pDoc);
+	
+			} catch(Exception e)
+			{
+
+			}
+		
+	}
+
 }

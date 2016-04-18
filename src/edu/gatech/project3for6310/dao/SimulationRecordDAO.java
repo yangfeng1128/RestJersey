@@ -18,4 +18,14 @@ public class SimulationRecordDAO {
 		return dao.getById(id);
 	}
 
+	public void create(Document srDoc) {
+		try{
+		 dao.save(srDoc);	
+		}catch(Exception e)
+		{
+			
+		}
+		
+	}
+
 }

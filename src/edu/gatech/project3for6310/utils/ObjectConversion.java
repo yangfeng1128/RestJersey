@@ -153,11 +153,11 @@ public class ObjectConversion {
 	public static Document simulationRecordToDocument(SimulationRecord simulationRecord) {
 		Document simulationRecordDoc = new Document();
 		Document studentPreference= null;
-		Map<String,String[]> sPreferences= simulationRecord.getStudentPreference();
+		Map<String, List<String>> sPreferences= simulationRecord.getStudentPreference();
 		if (sPreferences !=null)
 		{
 			studentPreference=new Document();	
-			for (Map.Entry<String,String[]> entry:sPreferences.entrySet())
+			for (Entry<String, List<String>> entry:sPreferences.entrySet())
 			{
 				studentPreference.append(entry.getKey(), entry.getValue());
 			}
@@ -211,11 +211,11 @@ public class ObjectConversion {
 	public static SimulationRecord documentToSimulationRecord(Document doc)
 	{
 		SimulationRecord simulationRecord = new SimulationRecord();
-		Map<String, String[]> studentPreference = new HashMap<String, String[]>();
+		Map<String, List<String>> studentPreference = new HashMap<String, List<String>>();
 		Document sPreference = (Document) doc.get("studentPreference");
 		for(Entry<String, Object> entry: sPreference.entrySet())
 		{
-			String[] courses =(String[])entry.getValue();
+			List<String> courses =(List<String>)entry.getValue();
 			studentPreference.put(entry.getKey(),courses );
 		}
 		

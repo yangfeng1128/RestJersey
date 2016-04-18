@@ -75,11 +75,12 @@ public class StudentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateStudent(@PathParam("id") String id, Student student){
-		String requestId ="Student_"+id+"_"+String.valueOf(System.currentTimeMillis());
+		String requestId ="student_"+id+"_"+String.valueOf(System.currentTimeMillis());
 		student.setIsSimulated(false);
 		student.setRequestId(requestId);
 		boolean success=studentDAO.updateStudent(id, student);
 		simulationService.addStudentRequest(requestId);
+		SimulationService.start();
 		JSONObject sb= new JSONObject();
 		
 	    String res = null;

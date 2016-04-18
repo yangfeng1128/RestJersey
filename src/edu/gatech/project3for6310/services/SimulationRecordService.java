@@ -47,7 +47,7 @@ public class SimulationRecordService {
 		Document simulationRecord =simulationRecordDAO.getOneSimulationRecord(id);
 		if(simulationRecord ==null)
 		{
-			return Response.status(400).build();
+			return Response.status(404).build();
 		}
 		return Response.status(200).entity(simulationRecord.toJson()).build();
 	}
