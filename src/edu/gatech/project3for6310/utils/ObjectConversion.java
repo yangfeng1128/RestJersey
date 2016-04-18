@@ -81,7 +81,6 @@ public class ObjectConversion {
 	public static Document courseToDocument(Course course) {
 		Document courseDoc = new Document();
 		courseDoc.append("id",course.getId())
-				   .append("isShadow", course.getIsShadow())
 				   .append("courseName", course.getCourseName())
 		           .append("assignedProfessor", course.getAssignedProfessor())
 				   .append("isOffered", course.getIsOffered())
@@ -97,7 +96,6 @@ public class ObjectConversion {
 		List<String> assignedta= (List<String>) doc.get("assignedTA");
 		List<String> prerequisites= (List<String>) doc.get("prerequisites");
 		course.setId(doc.getString("id"));
-		course.setIsShadow(doc.getBoolean("isShadow"));
 		course.setCourseName(doc.getString("courseName"));
 		course.setAssignedProfessor(doc.getString("assignedProfessor"));
 		course.setIsOffered(doc.getBoolean("isOffered"));
@@ -110,8 +108,8 @@ public class ObjectConversion {
 	public static Document professorToDocument(Professor professor) {
 		Document professorDoc = new Document();
 		professorDoc.append("id",professor.getId())
-				   .append("isShadow", professor.getIsShadow())
 				   .append("fullName", professor.getFullName())
+				   .append("available", professor.getAvailable())
 		           .append("capableCourses", professor.getCapableCourses())
 				   .append("courseAssigned", professor.getCourseAssigned());
 				
@@ -124,8 +122,8 @@ public class ObjectConversion {
 		List<String> capableCourses= (List<String>) doc.get("capableCourses");
 		List<String> courseAssigned= (List<String>) doc.get("courseAssigned");
 		professor.setId(doc.getString("id"));
-		professor.setIsShadow(doc.getBoolean("isShadow"));
 		professor.setFullName(doc.getString("fullName"));
+		professor.setAvailable(doc.getBoolean("available"));
 		professor.setCapableCourses(capableCourses);
 		professor.setCourseAssigned(courseAssigned);
 		return professor;
@@ -134,7 +132,7 @@ public class ObjectConversion {
 	public static Document teachingAssistantToDocument(TeachingAssistant teachingAssistant) {
 		Document teachingAssistantDoc = new Document();
 		teachingAssistantDoc.append("id",teachingAssistant.getId())
-				   .append("isShadow", teachingAssistant.getIsShadow())
+				   .append("available", teachingAssistant.getAvailable())
 		           .append("capableCourses", teachingAssistant.getCapableCourses())
 				   .append("courseAssigned", teachingAssistant.getCourseAssigned());		
 		return teachingAssistantDoc;
@@ -144,10 +142,11 @@ public class ObjectConversion {
 	{
 		TeachingAssistant teachingassistant = new TeachingAssistant();
 		List<String> capableCourses= (List<String>) doc.get("capableCourses");
+		List<String> courseAssigned= (List<String>) doc.get("courseAssigned");
 		teachingassistant.setId(doc.getString("id"));
-		teachingassistant.setIsShadow(doc.getBoolean("isShadow"));
+		teachingassistant.setAvailable(doc.getBoolean("available"));
 		teachingassistant.setCapableCourses(capableCourses);
-		teachingassistant.setCourseAssigned(doc.getString("courseAssigned"));
+		teachingassistant.setCourseAssigned(courseAssigned);
 		return teachingassistant;
 	}
 	
@@ -199,7 +198,6 @@ public class ObjectConversion {
 		
 		
 		simulationRecordDoc.append("id",simulationRecord.getId())
-				   .append("isShadowMode", simulationRecord.getIsShadowMode())
 				   .append("adminId", simulationRecord.getAdminId())
 				   .append("simulatedTime",simulationRecord.getSimulatedTime())
 		           .append("studentPreference", studentPreference)
@@ -245,7 +243,6 @@ public class ObjectConversion {
 			tAAssignment.put(entry.getKey(),courses );
 		}
 		simulationRecord.setId(doc.getString("id"));
-		simulationRecord.setIsShadowMode(doc.getBoolean("isShadowMode"));
 		simulationRecord.setSimulatedTime(doc.getString("simulatedTime"));
 		
 		simulationRecord.setStudentPreference(studentPreference);

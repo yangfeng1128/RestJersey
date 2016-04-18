@@ -5,16 +5,16 @@ import java.util.List;
 public class TeachingAssistant {
 
 	private String id;
-	private boolean isShadow;
+	private boolean available;
 	private List<String> capableCourses;
-	String courseAssigned;
+	private List<String> courseAssigned;
 	
 	
-	public boolean getIsShadow() {
-		return isShadow;
+	public boolean getAvailable() {
+		return available;
 	}
-	public void setIsShadow(boolean isShadow) {
-		this.isShadow = isShadow;
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	public String getId() {
 		return id;
@@ -28,10 +28,10 @@ public class TeachingAssistant {
 	public void setCapableCourses(List<String> capableCourses) {
 		this.capableCourses = capableCourses;
 	}
-	public String getCourseAssigned() {
+	public List<String> getCourseAssigned() {
 		return courseAssigned;
 	}
-	public void setCourseAssigned(String courseAssigned) {
+	public void setCourseAssigned(List<String> courseAssigned) {
 		this.courseAssigned = courseAssigned;
 	}
 	@Override

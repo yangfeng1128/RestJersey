@@ -13,7 +13,7 @@ public class MongoConnection {
 	private MongoConnection()
 	{
 		MongoClient mgClient = new MongoClient("localhost",27017);
-		this.mongoClient=mgClient;
+		MongoConnection.mongoClient=mgClient;
 		mongoDatabase= mongoClient.getDatabase("6310Project3");
 	}
 	

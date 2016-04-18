@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Course {
  private String id;
- private boolean isShadow;
  private String courseName;
  private String assignedProfessor;
  boolean isOffered;
@@ -12,12 +11,7 @@ public class Course {
  List<String> assignedTA;
  List<String> prerequisites;
  
-public boolean getIsShadow() {
-	return isShadow;
-}
-public void setIsShadow(boolean isShadow) {
-	this.isShadow = isShadow;
-}
+
 public String getId() {
 	return id;
 }
