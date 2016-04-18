@@ -49,7 +49,7 @@ public class TeachingAssistantService {
 		Document teachingAssistant =teachingAssistantDAO.getOneTeachingAssistant(id);
 		if(teachingAssistant ==null)
 		{
-			return Response.status(400).build();
+			return Response.status(404).build();
 		}
 		return Response.status(200).entity(teachingAssistant.toJson()).build();
 	}
@@ -61,13 +61,15 @@ public class TeachingAssistantService {
 	public Response updateTeachingAssistant(@PathParam("id") String id, TeachingAssistant teachingAssistant){
 		boolean success=teachingAssistantDAO.updateTeachingAssistant(id, teachingAssistant);
 	    String res = null;
-	    if (success != true)
+	    JSONObject sb = new JSONObject();
+	    if (success)
 	    {
 	    	res="updated successfully";
-	    	return Response.status(200).entity(res).header("isUpdated",success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
-	    	return Response.status(400).header("isUpdated", success).build();
+	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		
 	}
@@ -79,13 +81,15 @@ public class TeachingAssistantService {
 	public Response createTeachingAssistant(@PathParam("id") String id, TeachingAssistant teachingAssistant){
 		boolean success=teachingAssistantDAO.createTeachingAssistant(id, teachingAssistant);
 	    String res = null;
-	    if (success != true)
+	    JSONObject sb = new JSONObject();
+	    if (success)
 	    {
 	    	res="created successfully";
-	    	return Response.status(200).entity(res).header("isCreated",success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(200).entity(sb.toString()).header("isCreated",success).build();
 	    } else {
 	    	res="not created";
-	    	return Response.status(400).header("isCreated", success).build();
+	    	return Response.status(400).entity(sb.toString()).header("isCreated", success).build();
 	    }
 		
 	}
@@ -97,13 +101,15 @@ public class TeachingAssistantService {
 	public Response deleteTeachingAssistant(@PathParam("id") String id){
 		boolean success=teachingAssistantDAO.deleteTeachingAssistant(id);
 	    String res = null;
-	    if (success != true)
+	    JSONObject sb = new JSONObject();
+	    if (success)
 	    {
 	    	res="deleted successfully";
-	    	return Response.status(200).entity(res).header("isDeleted",success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(200).entity(sb.toString()).header("isDeleted",success).build();
 	    } else {
 	    	res="not deleted";
-	    	return Response.status(400).header("isDeleted", success).build();
+	    	return Response.status(400).entity(sb.toString()).header("isDeleted", success).build();
 	    }
 		
 	}

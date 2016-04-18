@@ -20,21 +20,36 @@ public class TeachingAssistantDAO {
 	}
 
 	public boolean updateTeachingAssistant(String id, TeachingAssistant teachingAssistant) {
+		try{
 		Document doc = ObjectConversion.teachingAssistantToDocument(teachingAssistant);
 		dao.updateById(id, doc);
 		return true;
+		} catch (Exception e)
+		{
+			return false;
+		}
 	}
 
 
 	public boolean createTeachingAssistant(String id, TeachingAssistant teachingAssistant) {
+		try{
 		Document doc = ObjectConversion.teachingAssistantToDocument(teachingAssistant);
 		dao.save(doc);
 		return true;
+		} catch (Exception e)
+		{
+			return false;
+		}
 	}
 
 	public boolean deleteTeachingAssistant(String id) {
+		try{
 		dao.deleteById(id);
 		return true;
+		} catch (Exception e)
+		{
+			return false;
+		}
 	}
 
 }
