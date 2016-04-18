@@ -1,0 +1,26 @@
+version: "2"
+
+services:
+    tomcat:
+        image: tomcat:7-jre8
+
+        links:
+            - mongo:mongo
+
+        environment:
+            MONGO_HOST: mongo
+
+        ports:
+            - 8080:8080
+
+        volumes:
+            - "./target/Project3RestJersey-0.0.1-SNAPSHOT.war:/usr/local/tomcat/webapps/api.war"
+
+    mongo:
+        image: mongo
+
+        ports:
+            - 27017:27017
+
+        volumes:
+            - "./data:/data"
