@@ -34,10 +34,6 @@ import static com.mongodb.client.model.Filters.*;
 public class DatabaseOperations {
 	private static MongoClient mongoClient =MongoConnection.getInstance().getClient();
 	private static MongoDatabase database=mongoClient.getDatabase("6310Project3");
-	private static MongoCollection<Document> studentCollection=database.getCollection("student");
-	private static MongoCollection<Document> teachingAssitantCollection=database.getCollection("teachingassitant");
-	private static MongoCollection<Document> courseCollection=database.getCollection("course");
-	private static MongoCollection<Document> professorCollection=database.getCollection("professor");
 	
 	
 	public static void main(String[] args){
@@ -111,7 +107,7 @@ public class DatabaseOperations {
 
 	private static void loadTeachingAssistants() {
 		database.createCollection("teachingAssistant");
-		MongoCollection<Document> collection=database.getCollection("teachingAssistant");
+		MongoCollection<Document> collection=database.getCollection("teachingassistant");
 		collection.createIndex(new Document("id",1), new IndexOptions().unique(true));
 		String teachingAssistantfile="resources/custormized/TApool2016Summer.csv";
 		try{ 
@@ -151,15 +147,35 @@ public class DatabaseOperations {
 		database.createCollection("course");
 		MongoCollection<Document> collection=database.getCollection("course");
 		collection.createIndex(new Document("id",1), new IndexOptions().unique(true));
+		Map<String,List<String>> prerequisiteMap = new HashMap<String,List<String>>();
 		String coursefile="resources/custormized/courses2016Summer.csv";
+		String prerequisitesfile="resources/custormized/course_dependencies2016Summer.csv";
 		try{ 
-		    BufferedReader br = new BufferedReader(new FileReader(coursefile));
+			BufferedReader br = new BufferedReader(new FileReader(prerequisitesfile));
 		     String line = br.readLine();
+		     while((line=br.readLine())!=null)
+		     {
+		    	 String[] str= line.split(",");
+		    	 String dependent = str[1];
+		    	 String prereq= str[0];
+		    	 if (prerequisiteMap.containsKey(dependent))
+		    	 {
+		    		 prerequisiteMap.get(dependent).add(prereq);
+		    	 } else {
+		    		 List<String> p= new ArrayList<String>();
+		    		 p.add(prereq);
+		    	     prerequisiteMap.put(dependent, p);
+		    	 }
+		     }
+		     br.close();
+		     br = new BufferedReader(new FileReader(coursefile));
+		      line = br.readLine();
 		     while((line=br.readLine())!=null)
 		     {
 		    	 String[] course=line.split(",");
 		    	 Course newCourse= new Course();
-		    	 newCourse.setId(course[0]);
+		    	 String id= course[0];
+		    	 newCourse.setId(id);
 		    	 newCourse.setCourseName(course[1]);
 		    	 String isMandatory = course[2];
 		    	 if (isMandatory.equals("0"))
@@ -168,6 +184,7 @@ public class DatabaseOperations {
 		    	 } else {
 		    		 newCourse.setIsMandatory(true);
 		    	 }
+		    	 newCourse.setPrerequisites(prerequisiteMap.get(id));
 		    	 Document doc= ObjectConversion.courseToDocument(newCourse);
 		    	 collection.insertOne(doc);
 		     }	  
