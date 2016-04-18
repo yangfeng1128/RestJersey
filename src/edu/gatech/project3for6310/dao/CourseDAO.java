@@ -21,9 +21,14 @@ public class CourseDAO {
 
 
 	public boolean updateCourse(String id, Course course) {
+		try{
 		Document doc = ObjectConversion.courseToDocument(course);
 		dao.updateById(id, doc);
+		return true;
+		} catch(Exception e)
+		{
 		return false;
+		}
 	}
 
 }

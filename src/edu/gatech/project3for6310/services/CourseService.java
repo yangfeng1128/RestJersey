@@ -49,7 +49,7 @@ public class CourseService {
 		Document course =courseDAO.getOneCourse(id);
 		if(course ==null)
 		{
-			return Response.status(400).build();
+			return Response.status(404).build();
 		}
 		return Response.status(200).entity(course.toJson()).build();
 	}
@@ -60,14 +60,17 @@ public class CourseService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCourse(@PathParam("id") String id, Course course){
 		boolean success=courseDAO.updateCourse(id, course);
+		JSONObject sb = new JSONObject();
 	    String res = null;
-	    if (success != true)
-	    {
+	    if (success)
+	    {	
 	    	res="updated successfully";
-	    	return Response.status(200).entity(res).header("isUpdated",success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
-	    	return Response.status(400).header("isUpdated", success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		
 	}

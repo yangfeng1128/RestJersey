@@ -4,6 +4,14 @@ package edu.gatech.project3for6310.entity;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.PROPERTY)
+@JsonIgnoreProperties("_id")
 public class SimulationRecord {
   private String id;
   private String adminId;
