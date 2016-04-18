@@ -7,12 +7,15 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  *
  * @author fengyang
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
+@JsonIgnoreProperties("_id")
 public class Student {
     private String id;
     private String fullName;

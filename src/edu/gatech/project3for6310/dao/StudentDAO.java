@@ -30,15 +30,25 @@ public class StudentDAO {
 	}
 
 	public boolean updateStudent(String id, Student student) {
+		try{
 		Document doc = ObjectConversion.studentToDocument(student);
 		dao.updateById(id, doc);
 		return true;
+		} catch( Exception e)
+		{
+			return false;
+		}
 	}
 	
-	public void saveOneStudent(Document doc)
+	public boolean saveOneStudent(Document doc)
 	{
-		
+		try{
 		dao.save(doc);
+		return true;
+		} catch(Exception e)
+		{
+		return false; 	
+		}
 	}
 
 	

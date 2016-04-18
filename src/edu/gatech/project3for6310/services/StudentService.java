@@ -63,7 +63,9 @@ public class StudentService {
 			courseDAO.saveOneStudent(doc);
 			return Response.status(200).entity(doc.toJson()).build();
 			*/
-			return Response.status(400).build();
+			JSONObject sb = new JSONObject();
+			sb.append("Exception:", "not found.");
+			return Response.status(404).entity(sb.toString()).build();
 		}
 		return Response.status(200).entity(student.toJson()).build();
 	}
@@ -78,14 +80,18 @@ public class StudentService {
 		student.setRequestId(requestId);
 		boolean success=studentDAO.updateStudent(id, student);
 		simulationService.addStudentRequest(requestId);
+		JSONObject sb= new JSONObject();
+		
 	    String res = null;
-	    if (success != true)
+	    if (success)
 	    {
 	    	res="updated successfully";
-	    	return Response.status(200).entity(res).header("isUpdated",success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
-	    	return Response.status(400).header("isUpdated", success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		
 	}

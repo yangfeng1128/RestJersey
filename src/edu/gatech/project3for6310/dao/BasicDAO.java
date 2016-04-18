@@ -3,11 +3,14 @@ package edu.gatech.project3for6310.dao;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bson.Document;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.UpdateResult;
 
 import edu.gatech.project3for6310.dbconnection.MongoConnection;
@@ -51,7 +54,12 @@ public class BasicDAO<T> {
 	public List<Document> getAll()
 	{
 		List<Document> list= new ArrayList<Document>();
-	 
+	    FindIterable<Document> docs =collection.find();
+	    Iterator<Document> idocs= docs.iterator();
+	    while (idocs.hasNext())
+	    {
+	    	list.add(idocs.next());
+	    }
 		return list;
 	}
 	public Document getByUserName(String username) {
