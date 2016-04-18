@@ -12,7 +12,12 @@ public class MongoConnection {
 	private static MongoDatabase mongoDatabase;
 	private MongoConnection()
 	{
-		MongoClient mgClient = new MongoClient("localhost",27017);
+        String host = System.getenv("MONGO_HOST");
+        if (host == "") {
+            host = "localhost";
+        }
+
+		MongoClient mgClient = new MongoClient(host, 27017);
 		MongoConnection.mongoClient=mgClient;
 		mongoDatabase= mongoClient.getDatabase("6310Project3");
 	}
