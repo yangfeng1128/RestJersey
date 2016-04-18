@@ -14,10 +14,10 @@ public class Course {
  private String id;
  private String courseName;
  private String assignedProfessor;
- boolean isOffered;
- boolean isMandatory;
- List<String> assignedTA;
- List<String> prerequisites;
+ private boolean isOffered;
+ private boolean isMandatory;
+ private List<String> assignedTA;
+ private List<String> prerequisites;
  
 
 public String getId() {
