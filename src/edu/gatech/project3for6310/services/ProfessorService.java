@@ -47,7 +47,7 @@ public class ProfessorService {
 		Document professor =professorDAO.getOneProfessor(id);
 		if(professor ==null)
 		{
-			return Response.status(400).build();
+			return Response.status(404).build();
 		}
 		return Response.status(200).entity(professor.toJson()).build();
 	}
@@ -58,14 +58,17 @@ public class ProfessorService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateProfessor(@PathParam("id") String id, Professor professor){
 		boolean success=professorDAO.updateProfessor(id, professor);
+		JSONObject sb = new JSONObject();
 	    String res = null;
-	    if (success != true)
+	    if (success)
 	    {
 	    	res="updated successfully";
-	    	return Response.status(200).entity(res).header("isUpdated",success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
-	    	return Response.status(400).header("isUpdated", success).build();
+	    	sb.append("result:", res);
+	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		
 	}

@@ -21,9 +21,14 @@ public class ProfessorDAO {
 	}
 
 	public boolean updateProfessor(String id, Professor professor) {
+		try{
 		Document doc = ObjectConversion.professorToDocument(professor);
 		dao.updateById(id, doc);
 		return true;
+		} catch(Exception e)
+		{
+			return false;
+		}
 	}
 
 }
