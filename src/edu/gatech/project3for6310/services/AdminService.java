@@ -27,7 +27,7 @@ public class AdminService {
 		simulationService.addAdminRequest(requestId);
 		SimulationService.start();
 		JSONObject sb= new JSONObject();
-		sb.append("result:", "submitted");	
+		sb.put("result", "submitted");
 	    return Response.status(200).entity(sb.toString()).header("isUpdated",true).build();
 
 	}

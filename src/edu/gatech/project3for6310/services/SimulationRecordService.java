@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import com.sun.jersey.spi.inject.Inject;
 
@@ -31,10 +32,10 @@ public class SimulationRecordService {
 	public Response getAllSimulationRecords(){
 		
 		List<Document> simulationRecords =simulationRecordDAO.getAllSimulationRecords();
-		JSONObject sb = new JSONObject();
+		JSONArray sb = new JSONArray();
 		for(Document d:simulationRecords)
 		{
-			sb.append(d.getString("id"),d.toJson());
+			sb.put(d);
 		}
 		return Response.status(200).entity(sb.toString()).build();
 	}
