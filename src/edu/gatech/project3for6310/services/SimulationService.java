@@ -18,12 +18,12 @@ import com.mongodb.client.MongoDatabase;
 
 
 import edu.gatech.project3for6310.Engine.Engine;
-import edu.gatech.project3for6310.Engine.SimulationEngine;
 import edu.gatech.project3for6310.entity.Course;
 import edu.gatech.project3for6310.entity.Professor;
 import edu.gatech.project3for6310.entity.SimulationRecord;
 import edu.gatech.project3for6310.entity.Student;
 import edu.gatech.project3for6310.entity.TeachingAssistant;
+import edu.gatech.project3for6310.scheduling.Scheduler;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
 public class SimulationService {
@@ -31,7 +31,7 @@ public class SimulationService {
 	private static SimulationService simulation;
 	private static final LinkedBlockingQueue<String> studentModeQueue = new LinkedBlockingQueue<String>();
 	private static final LinkedBlockingQueue<String> adminModeQueue = new LinkedBlockingQueue<String>();
-	private static Engine studentEngine= new SimulationEngine();
+	private static Engine studentEngine= Scheduler.getInstance();
 	private static Thread thread;
 	
 	private SimulationService()
