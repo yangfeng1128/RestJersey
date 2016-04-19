@@ -164,7 +164,7 @@ public class ObjectConversion {
 		}
 		
 		Document courseRecommended= null;
-		Map<String,List<String>> cRecommended= simulationRecord.getCourseRecommended();
+		Map<String,List<String>> cRecommended= simulationRecord.getStudentRecommendation();
 		if (cRecommended !=null)
 		{
 			courseRecommended=new Document();	
@@ -186,7 +186,7 @@ public class ObjectConversion {
 		}
 		
 		Document tAAssignment= null;
-		Map<String,List<String>> tAssignment= simulationRecord.getTAAssignment();
+		Map<String,List<String>> tAssignment= simulationRecord.getTaAssignment();
 		if (tAssignment !=null)
 		{
 			tAAssignment=new Document();	
@@ -201,9 +201,9 @@ public class ObjectConversion {
 				   .append("adminId", simulationRecord.getAdminId())
 				   .append("simulatedTime",simulationRecord.getSimulatedTime())
 		           .append("studentPreference", studentPreference)
-		           .append("courseRecommended", courseRecommended)
+		           .append("studentRecommendation", courseRecommended)
 		           .append("professorAssignment", professorAssignment)
-		           .append("tAAssignment", tAAssignment);		
+		           .append("taAssignment", tAAssignment);		
 		return simulationRecordDoc;
 	}
 	
@@ -220,7 +220,7 @@ public class ObjectConversion {
 		}
 		
 		Map<String, List<String>> courseRecommended = new HashMap<String, List<String>>();
-		Document cRecommend = (Document) doc.get("courseRecommended");
+		Document cRecommend = (Document) doc.get("studentRecommendation");
 		for(Entry<String, Object> entry: cRecommend.entrySet())
 		{
 			List<String> courses =(List<String>)entry.getValue();
@@ -236,7 +236,7 @@ public class ObjectConversion {
 		}
 		
 		Map<String, List<String>> tAAssignment = new HashMap<String, List<String>>();
-		Document tAssignment= (Document) doc.get("tAAssignment");
+		Document tAssignment= (Document) doc.get("taAssignment");
 		for(Entry<String, Object> entry: tAssignment.entrySet())
 		{
 			List<String> courses =(List<String>)entry.getValue();
@@ -246,11 +246,12 @@ public class ObjectConversion {
 		simulationRecord.setSimulatedTime(doc.getString("simulatedTime"));
 		
 		simulationRecord.setStudentPreference(studentPreference);
-		simulationRecord.setCourseRecommended(courseRecommended);
+		simulationRecord.setStudentRecommendation(courseRecommended);
 		simulationRecord.setProfessorAssignment(professorAssignment);
-		simulationRecord.setTAAssignment(tAAssignment);
+		simulationRecord.setTaAssignment(tAAssignment);
 		return simulationRecord;
 	}
+	
 	
 
 
