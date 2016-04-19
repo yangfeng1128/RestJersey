@@ -24,29 +24,22 @@ public class UserService {
 	@Path("/authenticate")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response VerifyUser(User user)
-	{
-		String username=user.getUsername();
-		String password=user.getPassword();
-		Document userDoc = userDAO.getOneUser(username);		
-		String storedPassword = null;
-		if (user !=null)
-		{
-		 storedPassword = userDoc.getString("password");
-		}
-		boolean isVerified = false;
-		if (password!=null && password.equals(storedPassword))
-		{
-			userDoc.put("password", "N.A");
-			isVerified=true;
-		}
-		if (isVerified ==true)
-		{
-		return Response.status(200).entity(userDoc.toJson()).header("verified",isVerified).build();
-		} else {
-		return Response.status(401).header("verified",isVerified).build();	
-		}
-	}
+	public Response VerifyUser(User user) {
+		String username = user.getUsername();
+		String password = user.getPassword();
 
-	
+		Document userDoc = userDAO.getOneUser(username);		
+
+        // User does not exist.
+        if (userDoc != null) {
+            String storedPassword = userDoc.getString("password");
+
+            if (password != null && password.equals(storedPassword)) {
+                userDoc.remove("password");
+                return Response.status(200).entity(userDoc.toJson()).build();
+            }
+        }
+
+		return Response.status(401).build();	
+	}
 }
