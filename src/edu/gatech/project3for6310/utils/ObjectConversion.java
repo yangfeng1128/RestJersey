@@ -175,11 +175,11 @@ public class ObjectConversion {
 		}
 		
 		Document professorAssignment= null;
-		Map<String,String> pAssignment= simulationRecord.getProfessorAssignment();
+		Map<String, List<String>> pAssignment= simulationRecord.getProfessorAssignment();
 		if (pAssignment !=null)
 		{
 			professorAssignment=new Document();	
-			for (Map.Entry<String,String> entry:pAssignment.entrySet())
+			for (Entry<String, List<String>> entry:pAssignment.entrySet())
 			{
 				professorAssignment.append(entry.getKey(), entry.getValue());
 			}
@@ -227,11 +227,11 @@ public class ObjectConversion {
 			courseRecommended.put(entry.getKey(),courses );
 		}
 		
-		Map<String, String> professorAssignment = new HashMap<String, String>();
+		Map<String, List<String>> professorAssignment = new HashMap<String, List<String>>();
 		Document pAssignment = (Document) doc.get("professorAssignment");
 		for(Entry<String, Object> entry: pAssignment.entrySet())
 		{
-			String p =(String)entry.getValue();
+			List<String> p =(List<String>)entry.getValue();
 			professorAssignment.put(entry.getKey(),p );
 		}
 		

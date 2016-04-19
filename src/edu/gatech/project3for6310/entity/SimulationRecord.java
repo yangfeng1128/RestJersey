@@ -18,7 +18,7 @@ public class SimulationRecord {
   private String simulatedTime;
   private Map<String,List<String>> studentPreference;
   private Map<String, List<String>> courseRecommended;
-  private Map<String, String> professorAssignment;
+  private Map<String, List<String>> professorAssignment;
   private Map<String, List<String>> tAAssignment;
   
 public String getId() {
@@ -52,10 +52,10 @@ public Map<String, List<String>> getCourseRecommended() {
 public void setCourseRecommended(Map<String, List<String>> courseRecommended) {
 	this.courseRecommended = courseRecommended;
 }
-public Map<String, String> getProfessorAssignment() {
+public Map<String, List<String>> getProfessorAssignment() {
 	return professorAssignment;
 }
-public void setProfessorAssignment(Map<String, String> professorAssignment) {
+public void setProfessorAssignment(Map<String, List<String>> professorAssignment) {
 	this.professorAssignment = professorAssignment;
 }
 public Map<String, List<String>> getTAAssignment() {

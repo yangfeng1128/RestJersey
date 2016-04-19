@@ -20,13 +20,6 @@ import com.sun.jersey.spi.inject.Inject;
 
 import edu.gatech.project3for6310.Engine.Engine;
 import edu.gatech.project3for6310.Engine.SimulationEngine;
-import edu.gatech.project3for6310.dao.BasicDAO;
-import edu.gatech.project3for6310.dao.CourseDAO;
-import edu.gatech.project3for6310.dao.ProfessorDAO;
-import edu.gatech.project3for6310.dao.SimulationRecordDAO;
-import edu.gatech.project3for6310.dao.StudentDAO;
-import edu.gatech.project3for6310.dao.TeachingAssistantDAO;
-import edu.gatech.project3for6310.dbconnection.MongoConnection;
 import edu.gatech.project3for6310.entity.Course;
 import edu.gatech.project3for6310.entity.Professor;
 import edu.gatech.project3for6310.entity.SimulationRecord;
@@ -124,7 +117,7 @@ public class SimulationService {
 			if (sr==null) return;
 			 Map<String, List<String>> requestMap=sr.getStudentPreference();
 			 Map<String, List<String>> courseRecommended=sr.getCourseRecommended();
-			 Map<String, String> professorAssignment=sr.getProfessorAssignment();
+			 Map<String, List<String>> professorAssignment=sr.getProfessorAssignment();
 			 Map<String, List<String>> tAAssignment=sr.getTAAssignment();
 			 
 			 
@@ -145,67 +138,85 @@ public class SimulationService {
 			MongoCollection<Document> coursedao=database.getCollection("course");
 			MongoCollection<Document> professordao=database.getCollection("professor");
 			MongoCollection<Document> teachingassistantdao=database.getCollection("teachingassistant");
+			Map<String,String> courseProfMap = new HashMap<String, String>();
+			Map<String, List<String>> courseTaMap= new HashMap<String, List<String>>();
 			 for (Entry<String, List<String>> entry:courseRecommended.entrySet())
 			 {
 				 String id= entry.getKey();
 				 List<String> courses = entry.getValue();
 				 Document sDoc=studentdao.find(eq("id", id)).first();
 				 sDoc.put("rcmCources", courses);
-				 String request=sDoc.getString("preferredCources");
-				 if (request.equals(requestMap.get(id)))
+				 List<String> request=(List<String>) sDoc.get("preferredCources");
+				 if (hasSameContent(request,requestMap.get(id)))
 				 {
 					 sDoc.put("isSimulated", true);
 				 }
 				 studentdao.replaceOne(eq("id",id),sDoc);
 			 }
 			 
-			 for (Entry<String, String> entry:professorAssignment.entrySet())
+			 for (Entry<String, List<String>> entry:professorAssignment.entrySet())
 			 {
-				 String courseid= entry.getKey();
 				 String professorid = entry.getKey();
-				 Document cDoc=coursedao.find(eq("id", courseid)).first();
-				 cDoc.put("assignedProfessor", professorid);
-				 cDoc.put("assignedTA", tAAssignment.get(courseid));
-				 coursedao.replaceOne(eq("id",courseid), cDoc);
-			 }
-			 
-			 
-			 for (Entry<String, String> entry:professorAssignment.entrySet())
-			 {
-				 String courseid= entry.getKey();
-				 String professorid = entry.getKey();
+				 List<String> courseids= entry.getValue();	
 				 Document pDoc=professordao.find(eq("id", professorid)).first();
-				 List<String> courseAssigned=(List<String>) pDoc.get("courseAssigned");
-				 if (courseAssigned == null)
-				 {
-					 courseAssigned= new ArrayList<String>(); 
-				 }
-				 courseAssigned.add(courseid);
-				 pDoc.put("courseAssigned", courseAssigned);
+				 pDoc.put("courseAssigned", courseids);
 				 professordao.replaceOne(eq("id",professorid), pDoc);
-			 }
-		
+				 for (String c: courseids)
+				 {
+					 if (!courseProfMap.containsKey(c))
+					 {
+						 courseProfMap.put(c, professorid);
+					 }
+				 }
+			 }	
 			 for (Entry<String, List<String>> entry:tAAssignment.entrySet())
 			 {
-				 String courseid= entry.getKey();
-				 for(String id:entry.getValue())
+				 String tAid= entry.getKey();
+				 List<String> courseids = entry.getValue();
+				 Document tDoc=teachingassistantdao.find(eq("id", tAid)).first();
+				 tDoc.put("courseAssigned", courseids);
+				 teachingassistantdao.replaceOne(eq("id",tAid), tDoc);
+				 for (String c: courseids)
 				 {
-					 Document tDoc=teachingassistantdao.find(eq("id", id)).first();
-					 List<String> courseAssigned=(List<String>) tDoc.get("courseAssigned");
-					 if (courseAssigned == null)
+					 if (!courseTaMap.containsKey(c))
 					 {
-						 courseAssigned= new ArrayList<String>(); 
+						 List<String> taAssiged= new ArrayList<String>();
+						 taAssiged.add(tAid);
+						 courseTaMap.put(c, taAssiged);
+						 
+					 } else {
+						 List<String> taAssiged= courseTaMap.get(c);
+						 taAssiged.add(tAid);
 					 }
-					 courseAssigned.add(courseid);
-					 tDoc.put("courseAssigned", courseAssigned);
-					 teachingassistantdao.replaceOne(eq("id",id), tDoc);
 				 }
 			 }
-			 
-			
+			 MongoCursor<Document> courses=coursedao.find().iterator();
+			 while (courses.hasNext())
+			 {
+				 Document cDoc= courses.next();
+				 String id=cDoc.getString("id");
+				 if (courseProfMap.containsKey(id))
+				 {
+					 cDoc.put("isOffered", true);
+					 cDoc.put("assignedProfessor", courseProfMap.get(id));
+					 cDoc.put("assignedTA", courseTaMap.get(id));
+					 coursedao.replaceOne(eq("id",id), cDoc);
+				 }
+			 }
 		}
 
 
+		private static boolean hasSameContent(List<String> request, List<String> list) {
+			if (request.size() !=list.size()) return false;
+			for (int i=0; i< request.size();i++)
+			{
+				if (!request.get(i).equals(list.get(i)))
+			    {
+					return false;
+				}
+			}
+			return true;
+		}
 		private static void createSimulationObjects(List<String> studentrequests, List<String> adminrequests) {
 		        studentrequests=null;
 		        adminrequests=null;
