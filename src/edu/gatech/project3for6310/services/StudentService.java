@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
@@ -40,10 +41,10 @@ public class StudentService {
 	public Response getAllStudents(){
 		
 		List<Document> students =studentDAO.getAllStudents();
-		JSONObject sb = new JSONObject();
+		JSONArray sb = new JSONArray();
 		for(Document d:students)
 		{
-			sb.append(d.getString("id"),d.toJson());
+			sb.put(d);
 		}
 		return Response.status(200).entity(sb.toString()).build();
 	}
@@ -87,11 +88,11 @@ public class StudentService {
 	    if (success)
 	    {
 	    	res="updated successfully";
-	    	sb.append("result:", res);
+	    	sb.put("result", res);
 	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
-	    	sb.append("result:", res);
+	    	sb.put("result", res);
 	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		

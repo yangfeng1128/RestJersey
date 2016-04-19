@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import com.sun.jersey.spi.inject.Inject;
 
@@ -31,10 +32,10 @@ public class ProfessorService {
 	public Response getAllProfessors(){
 		
 		List<Document> professors =professorDAO.getAllProfessors();
-		JSONObject sb = new JSONObject();
+		JSONArray sb = new JSONArray();
 		for(Document d:professors)
 		{
-			sb.append(d.getString("id"),d.toJson());
+			sb.put(d);
 		}
 		return Response.status(200).entity(sb.toString()).build();
 	}
@@ -63,11 +64,11 @@ public class ProfessorService {
 	    if (success)
 	    {
 	    	res="updated successfully";
-	    	sb.append("result:", res);
+	    	sb.put("result", res);
 	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
-	    	sb.append("result:", res);
+	    	sb.put("result", res);
 	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		

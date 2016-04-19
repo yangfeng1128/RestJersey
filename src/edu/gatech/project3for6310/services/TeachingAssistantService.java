@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import com.sun.jersey.spi.inject.Inject;
 
@@ -33,10 +34,10 @@ public class TeachingAssistantService {
 	public Response getAllTeachingAssistants(){
 		
 		List<Document> teachingAssistants =teachingAssistantDAO.getAllTeachingAssistants();
-		JSONObject sb = new JSONObject();
+		JSONArray sb = new JSONArray();
 		for(Document d:teachingAssistants)
 		{
-			sb.append(d.getString("id"),d.toJson());
+			sb.put(d);
 		}
 		return Response.status(200).entity(sb.toString()).build();
 	}
@@ -65,7 +66,7 @@ public class TeachingAssistantService {
 	    if (success)
 	    {
 	    	res="updated successfully";
-	    	sb.append("result:", res);
+	    	sb.put("result", res);
 	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
@@ -85,7 +86,7 @@ public class TeachingAssistantService {
 	    if (success)
 	    {
 	    	res="created successfully";
-	    	sb.append("result:", res);
+	    	sb.put("result", res);
 	    	return Response.status(200).entity(sb.toString()).header("isCreated",success).build();
 	    } else {
 	    	res="not created";
@@ -105,7 +106,7 @@ public class TeachingAssistantService {
 	    if (success)
 	    {
 	    	res="deleted successfully";
-	    	sb.append("result:", res);
+	    	sb.put("result", res);
 	    	return Response.status(200).entity(sb.toString()).header("isDeleted",success).build();
 	    } else {
 	    	res="not deleted";
