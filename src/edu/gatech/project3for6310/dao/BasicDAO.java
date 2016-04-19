@@ -1,6 +1,7 @@
 package edu.gatech.project3for6310.dao;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Projections.excludeId;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,17 +45,18 @@ public class BasicDAO<T> {
 	
 	public Document getById(String id)
 	{
-		return collection.find(eq("id", id)).first();
+		return collection.find(eq("id", id)).projection(excludeId()).first();
 	}
 	
 	public void updateById(String id, Document doc)
 	{
 		collection.replaceOne(eq("id",id), doc);
 	}
+
 	public List<Document> getAll()
 	{
 		List<Document> list= new ArrayList<Document>();
-	    FindIterable<Document> docs =collection.find();
+	    FindIterable<Document> docs =collection.find().projection(excludeId());
 	    Iterator<Document> idocs= docs.iterator();
 	    while (idocs.hasNext())
 	    {
@@ -63,7 +65,7 @@ public class BasicDAO<T> {
 		return list;
 	}
 	public Document getByUserName(String username) {
-		return collection.find(eq("username", username)).first();
+		return collection.find(eq("username", username)).projection(excludeId()).first();
 	}
 	
 	public static void main(String[] args)
@@ -71,7 +73,4 @@ public class BasicDAO<T> {
 		BasicDAO<Student> s= new BasicDAO<Student>(Student.class);
 	    System.out.println(s.collection.find(eq("id","04569")).first());
 	}
-
-
 }
- 
