@@ -243,7 +243,10 @@ public class SimulationService {
 				while (docsP.hasNext())
 				{
 					Professor p= ObjectConversion.documentToProfessor(docsP.next());
+					if(p.getAvailable()==true)
+					{
 					professors.add(p);
+					}
 				}
 			
 				MongoCollection<Document> teachingassistantdao=database.getCollection("teachingassistant");
@@ -252,7 +255,10 @@ public class SimulationService {
 				while(docsT.hasNext())
 				{
 					TeachingAssistant t= ObjectConversion.documentToTeachingAssistant(docsT.next());
+					if(t.getAvailable()==true)
+					{
 					teachingassistants.add(t);
+					}
 				}
 			
 			/*
