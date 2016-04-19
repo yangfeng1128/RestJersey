@@ -47,6 +47,11 @@ public List<String> getCourseAssigned() {
 public void setCourseAssigned(List<String> courseAssigned) {
 	this.courseAssigned = courseAssigned;
 }
+
+
+public boolean canTeach(Course course){
+	return capableCourses.contains(course.getId()); 
+}
 @Override
 public int hashCode() {
 	final int prime = 31;

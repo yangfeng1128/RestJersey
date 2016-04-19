@@ -107,6 +107,32 @@ public class Student {
 	public void setRcmCources(List<String> rcmCources) {
 		this.rcmCources = rcmCources;
 	}
+	
+	public int getCoursePreferrence(Course course){
+		int courseCount; 
+		
+		courseCount = this.preferredCources.size(); 
+		for(int i=0; i<courseCount; i++){
+			if(this.preferredCources.get(i).equals(course.getId()))
+				return i+1; 
+		}  
+		return 100; 
+	}
+	
+	public boolean meetsPrerequisites(Course course){
+	return course.getPrerequisites().isEmpty() || this.courseTaken.containsAll(course.getPrerequisites()); 
+}
+
+/**
+ * this needs to be changed later
+ * the proper logic is as follows: 
+ * if(student has met their foundational courses) : return min(2, numDesiredCourse)
+ * else : return min(1, numDesiredCourse)
+ * @return
+ */
+public int getCourseLimit(){
+	return 1; 
+}
 
 	@Override
 	public int hashCode() {
