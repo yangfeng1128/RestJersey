@@ -121,6 +121,10 @@ public class SimulationService {
 			 
 			 
 			MongoCollection<Document> simulationrecorddao= database.getCollection("simulationrecord");
+			long count=simulationrecorddao.count();
+			count++;	
+	        sr.setId(String.valueOf(count));
+			
 			Document srDoc= ObjectConversion.simulationRecordToDocument(sr);
 			simulationrecorddao.insertOne(srDoc);
 			 
@@ -142,13 +146,15 @@ public class SimulationService {
 			 for (Entry<String, List<String>> entry:courseRecommended.entrySet())
 			 {
 				 String id= entry.getKey();
-				 List<String> courses = entry.getValue();
+				 List<String> cs = entry.getValue();
 				 Document sDoc=studentdao.find(eq("id", id)).first();
-				 sDoc.put("rcmCources", courses);
+				 sDoc.put("rcmCources", cs);
 				 List<String> request=(List<String>) sDoc.get("preferredCources");
 				 if (hasSameContent(request,requestMap.get(id)))
 				 {
 					 sDoc.put("isSimulated", true);
+				 } else {
+					 sDoc.put("isSimulated", false); 
 				 }
 				 studentdao.replaceOne(eq("id",id),sDoc);
 			 }
@@ -175,24 +181,24 @@ public class SimulationService {
 				 Document tDoc=teachingassistantdao.find(eq("id", tAid)).first();
 				 tDoc.put("courseAssigned", courseids);
 				 teachingassistantdao.replaceOne(eq("id",tAid), tDoc);
-				 for (String c: courseids)
+				 for (String ci: courseids)
 				 {
-					 if (!courseTaMap.containsKey(c))
+					 if (!courseTaMap.containsKey(ci))
 					 {
 						 List<String> taAssiged= new ArrayList<String>();
 						 taAssiged.add(tAid);
-						 courseTaMap.put(c, taAssiged);
+						 courseTaMap.put(ci, taAssiged);
 						 
 					 } else {
-						 List<String> taAssiged= courseTaMap.get(c);
+						 List<String> taAssiged= courseTaMap.get(ci);
 						 taAssiged.add(tAid);
 					 }
 				 }
 			 }
-			 MongoCursor<Document> courses=coursedao.find().iterator();
-			 while (courses.hasNext())
+			 MongoCursor<Document> coursesDoc=coursedao.find().iterator();
+			 while (coursesDoc.hasNext())
 			 {
-				 Document cDoc= courses.next();
+				 Document cDoc= coursesDoc.next();
 				 String id=cDoc.getString("id");
 				 if (courseProfMap.containsKey(id))
 				 {
@@ -206,6 +212,7 @@ public class SimulationService {
 
 
 		private static boolean hasSameContent(List<String> request, List<String> list) {
+			if (list == null) return false;
 			if (request.size() !=list.size()) return false;
 			for (int i=0; i< request.size();i++)
 			{
@@ -233,8 +240,8 @@ public class SimulationService {
 				MongoCursor<Document> docC=coursedao.find().iterator();
 				while (docC.hasNext())
 				{
-					Course c= ObjectConversion.documentToCourse(docC.next());
-					courses.add(c);
+					Course co= ObjectConversion.documentToCourse(docC.next());
+					courses.add(co);
 				}
 
 				MongoCollection<Document> professordao=database.getCollection("professor");
