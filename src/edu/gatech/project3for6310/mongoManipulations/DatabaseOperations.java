@@ -106,7 +106,7 @@ public class DatabaseOperations {
 
 
 	private static void loadTeachingAssistants() {
-		database.createCollection("teachingAssistant");
+		database.createCollection("teachingassistant");
 		MongoCollection<Document> collection=database.getCollection("teachingassistant");
 		collection.createIndex(new Document("id",1), new IndexOptions().unique(true));
 		String teachingAssistantfile="resources/custormized/TApool2016Summer.csv";

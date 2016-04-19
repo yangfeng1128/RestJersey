@@ -1,5 +1,7 @@
 package edu.gatech.project3for6310.services;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,18 +83,7 @@ public class SimulationService {
 	private static class Simulate implements Runnable
 	{
 		private static MongoClient mongoClient; 
-		private static MongoDatabase database;
-		
-		private static MongoCollection<Document>  coursedao;//= database.getCollection("course") ;
-	
-		private static MongoCollection<Document> professordao;//=database.getCollection("professor");// = new BasicDAO<Professor>(Professor.class) ;
-	
-		private static MongoCollection<Document> simulationrecorddao;//=database.getCollection("simulatedrecord");//= new BasicDAO<SimulationRecord>(SimulationRecord.class);
-		
-		private static MongoCollection<Document> studentdao;//=database.getCollection("student");//= new BasicDAO<Student>(Student.class);
-		
-		private static MongoCollection<Document> teachingassistantdao;//=database.getCollection("teachingassistant");//=new BasicDAO<TeachingAssistant>(TeachingAssistant.class);
-		
+		private static MongoDatabase database;		
 		private static List<Student> students;
 		private static List<Course> courses;
 		private static List<Professor> professors;
@@ -104,8 +95,7 @@ public class SimulationService {
 	            host = "localhost";
 	        }
 
-			MongoClient mgClient = new MongoClient(host, 27017);
-			mongoClient=mgClient;
+	        mongoClient = new MongoClient(host, 27017);
 			database= mongoClient.getDatabase("6310Project3");
 	
 		}
@@ -125,18 +115,23 @@ public class SimulationService {
 			  if 	(studentModeQueue.size() ==0 && adminModeQueue.size()==0)
 			  {
 				  finished=true;
+				  mongoClient.close();
 			  }
 			}
 			
 		}
 		private static void updateDatabase(List<String>studentrequests, SimulationRecord sr) {
+			if (sr==null) return;
 			 Map<String, List<String>> requestMap=sr.getStudentPreference();
 			 Map<String, List<String>> courseRecommended=sr.getCourseRecommended();
 			 Map<String, String> professorAssignment=sr.getProfessorAssignment();
 			 Map<String, List<String>> tAAssignment=sr.getTAAssignment();
 			 
-			 Document srDoc= ObjectConversion.simulationRecordToDocument(sr);
-			 simulationrecorddao.insertOne(srDoc);
+			 
+			MongoCollection<Document> simulationrecorddao= database.getCollection("simulationrecord");
+			Document srDoc= ObjectConversion.simulationRecordToDocument(sr);
+			simulationrecorddao.insertOne(srDoc);
+			 
 			 /*
 			 Map<String, String> requestMap = new HashMap<String,String>();
 			 for (String s:studentrequests)
@@ -146,36 +141,40 @@ public class SimulationService {
 				 requestMap.put(id, s);
 			 }
 			 */
+			MongoCollection<Document> studentdao=database.getCollection("student");
+			MongoCollection<Document> coursedao=database.getCollection("course");
+			MongoCollection<Document> professordao=database.getCollection("professor");
+			MongoCollection<Document> teachingassistantdao=database.getCollection("teachingassistant");
 			 for (Entry<String, List<String>> entry:courseRecommended.entrySet())
 			 {
 				 String id= entry.getKey();
 				 List<String> courses = entry.getValue();
-				 Document sDoc=studentdao.getById(id);
+				 Document sDoc=studentdao.find(eq("id", id)).first();
 				 sDoc.put("rcmCources", courses);
 				 String request=sDoc.getString("preferredCources");
 				 if (request.equals(requestMap.get(id)))
 				 {
 					 sDoc.put("isSimulated", true);
 				 }
-				 studentdao.updateById(id,sDoc);
-			 }
-			 coursedao=new BasicDAO<Course>(Course.class);
-			 for (Entry<String, String> entry:professorAssignment.entrySet())
-			 {
-				 String courseid= entry.getKey();
-				 String professorid = entry.getKey();
-				 Document cDoc=coursedao.getById(courseid);
-				 cDoc.put("assignedProfessor", professorid);
-				 cDoc.put("assignedTA", tAAssignment.get(courseid));
-				 coursedao.updateById(courseid, cDoc);
+				 studentdao.replaceOne(eq("id",id),sDoc);
 			 }
 			 
-			 professordao = new BasicDAO<Professor>(Professor.class);
 			 for (Entry<String, String> entry:professorAssignment.entrySet())
 			 {
 				 String courseid= entry.getKey();
 				 String professorid = entry.getKey();
-				 Document pDoc=professordao.getById(professorid);
+				 Document cDoc=coursedao.find(eq("id", courseid)).first();
+				 cDoc.put("assignedProfessor", professorid);
+				 cDoc.put("assignedTA", tAAssignment.get(courseid));
+				 coursedao.replaceOne(eq("id",courseid), cDoc);
+			 }
+			 
+			 
+			 for (Entry<String, String> entry:professorAssignment.entrySet())
+			 {
+				 String courseid= entry.getKey();
+				 String professorid = entry.getKey();
+				 Document pDoc=professordao.find(eq("id", professorid)).first();
 				 List<String> courseAssigned=(List<String>) pDoc.get("courseAssigned");
 				 if (courseAssigned == null)
 				 {
@@ -183,15 +182,15 @@ public class SimulationService {
 				 }
 				 courseAssigned.add(courseid);
 				 pDoc.put("courseAssigned", courseAssigned);
-				 professordao.updateById(professorid, pDoc);
+				 professordao.replaceOne(eq("id",professorid), pDoc);
 			 }
-			 teachingassistantdao=new BasicDAO<TeachingAssistant>(TeachingAssistant.class);
+		
 			 for (Entry<String, List<String>> entry:tAAssignment.entrySet())
 			 {
 				 String courseid= entry.getKey();
 				 for(String id:entry.getValue())
 				 {
-					 Document tDoc=teachingassistantdao.getById(id);
+					 Document tDoc=teachingassistantdao.find(eq("id", id)).first();
 					 List<String> courseAssigned=(List<String>) tDoc.get("courseAssigned");
 					 if (courseAssigned == null)
 					 {
@@ -199,7 +198,7 @@ public class SimulationService {
 					 }
 					 courseAssigned.add(courseid);
 					 tDoc.put("courseAssigned", courseAssigned);
-					 teachingassistantdao.updateById(id, tDoc);
+					 teachingassistantdao.replaceOne(eq("id",id), tDoc);
 				 }
 			 }
 			 
@@ -211,7 +210,7 @@ public class SimulationService {
 		        studentrequests=null;
 		        adminrequests=null;
 				students=new ArrayList<Student>();
-				studentdao=database.getCollection("student");
+				MongoCollection<Document> studentdao=database.getCollection("student");
 				MongoCursor<Document> docs=studentdao.find().iterator();
 				while (docs.hasNext())
 				{
@@ -228,6 +227,7 @@ public class SimulationService {
 					courses.add(c);
 				}
 
+				MongoCollection<Document> professordao=database.getCollection("professor");
 				professors=new ArrayList<Professor>();
 				MongoCursor<Document> docsP=professordao.find().iterator();
 				while (docsP.hasNext())
@@ -236,6 +236,7 @@ public class SimulationService {
 					professors.add(p);
 				}
 			
+				MongoCollection<Document> teachingassistantdao=database.getCollection("teachingassistant");
 				teachingassistants=new ArrayList<TeachingAssistant>();
 				MongoCursor<Document> docsT=teachingassistantdao.find().iterator();
 				while(docsT.hasNext())
