@@ -108,7 +108,15 @@ public class Student {
 		this.rcmCources = rcmCources;
 	}
 	
+	/**
+	 * the preferred courses for all the students is NULL
+	 * @param course
+	 * @return
+	 */
 	public int getCoursePreferrence(Course course){
+		
+		return Integer.parseInt(course.getId()); 
+		/*
 		int courseCount; 
 		
 		courseCount = this.preferredCources.size(); 
@@ -117,10 +125,11 @@ public class Student {
 				return i+1; 
 		}  
 		return 100; 
+		*/
 	}
 	
 	public boolean meetsPrerequisites(Course course){
-	return course.getPrerequisites().isEmpty() || this.courseTaken.containsAll(course.getPrerequisites()); 
+	return course.getPrerequisites() == null || this.courseTaken.containsAll(course.getPrerequisites()); 
 }
 
 /**

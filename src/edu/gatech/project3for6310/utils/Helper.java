@@ -92,7 +92,7 @@ public class Helper {
 		professor = new Professor(); 
 		professor.setId("3");
 		professor.setFullName("Abbie JACKSON");
-		professor.setCapableCourses(Arrays.asList("E1", "2", "3"));
+		professor.setCapableCourses(Arrays.asList("1", "2", "3"));
 		professor.setCourseAssigned(Arrays.asList("3"));
 		professors.add(professor); 
 		

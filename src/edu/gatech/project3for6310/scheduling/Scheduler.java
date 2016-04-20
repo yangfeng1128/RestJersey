@@ -120,7 +120,7 @@ public class Scheduler implements Engine{
 				for(int j=0; j<courseCount; j++){
 					if(studentCourseResults[i][j] > 0){
 						course = courseMap.get(j); 
-						studentRecommendation.get(student.getId()).add(course.getCourseName()); 
+						studentRecommendation.get(student.getId()).add(course.getId()); 
 					}
 				}
 			}
@@ -132,7 +132,7 @@ public class Scheduler implements Engine{
 				for(int j=0; j<courseCount; j++){
 					if(professorCourseResults[j][i] > 0){
 						course = courseMap.get(j); 
-						professorAssignment.get(professor.getId()).add(course.getCourseName()); 
+						professorAssignment.get(professor.getId()).add(course.getId()); 
 					}
 				}
 			}
@@ -144,7 +144,7 @@ public class Scheduler implements Engine{
 				for(int j=0; j<courseCount; j++){
 					if(taCourseResults[j][i] > 0){
 						course = courseMap.get(j); 
-						taAssignment.get(ta.getId()).add(course.getCourseName()); 
+						taAssignment.get(ta.getId()).add(course.getId()); 
 					}
 				}
 			}

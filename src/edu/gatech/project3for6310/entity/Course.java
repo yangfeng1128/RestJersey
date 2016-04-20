@@ -38,12 +38,18 @@ public String getAssignedProfessor() {
 public void setAssignedProfessor(String assignedProfessor) {
 	this.assignedProfessor = assignedProfessor;
 }
+/**
+ * it seems that it is always returning false
+ * @return
+ */
 public boolean getIsOffered() {
-	return isOffered;
+	//return isOffered;
+	return true; 
 }
 public void setIsOffered(boolean isOffered) {
 	this.isOffered = isOffered;
 }
+
 public boolean getIsMandatory() {
 	return isMandatory;
 }
