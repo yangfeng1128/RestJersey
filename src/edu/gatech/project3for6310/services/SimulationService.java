@@ -149,7 +149,7 @@ public class SimulationService {
 				 List<String> cs = entry.getValue();
 				 Document sDoc=studentdao.find(eq("id", id)).first();
 				 sDoc.put("rcmCources", cs);
-				 List<String> request=(List<String>) sDoc.get("preferredCources");
+				 List<String> request=(List<String>) sDoc.get("preferredCourses");
 				 if (hasSameContent(request,requestMap.get(id)))
 				 {
 					 sDoc.put("isSimulated", true);
