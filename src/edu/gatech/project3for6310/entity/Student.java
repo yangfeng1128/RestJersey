@@ -21,7 +21,7 @@ public class Student {
     private String fullName;
     private String email;
 	private int numDesiredCourse;
-    private List<String> preferredCources;
+    private List<String> preferredCourses;
     private String requestId;
     private List<String> rcmCources;
     private boolean isSimulated;
@@ -37,13 +37,16 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public List<String> getPreferredCources() {
-		return this.preferredCources;
-	}
 
 	
-	public void setPreferredCources(List<String> preferredCources) {
-		this.preferredCources = preferredCources;
+
+
+	public List<String> getPreferredCourses() {
+		return preferredCourses;
+	}
+
+	public void setPreferredCourses(List<String> preferredCourses) {
+		this.preferredCourses = preferredCourses;
 	}
 
 	public String getFullName() {
@@ -119,9 +122,9 @@ public class Student {
 		/*
 		int courseCount; 
 		
-		courseCount = this.preferredCources.size(); 
+		courseCount = this.preferredCourses.size(); 
 		for(int i=0; i<courseCount; i++){
-			if(this.preferredCources.get(i).equals(course.getId()))
+			if(this.preferredCourses.get(i).equals(course.getId()))
 				return i+1; 
 		}  
 		return 100; 
@@ -153,7 +156,7 @@ public int getCourseLimit(){
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + (isSimulated ? 1231 : 1237);
 		result = prime * result + numDesiredCourse;
-		result = prime * result + ((preferredCources == null) ? 0 : preferredCources.hashCode());
+		result = prime * result + ((preferredCourses == null) ? 0 : preferredCourses.hashCode());
 		result = prime * result + ((rcmCources == null) ? 0 : rcmCources.hashCode());
 		result = prime * result + ((requestId == null) ? 0 : requestId.hashCode());
 		return result;
@@ -192,10 +195,10 @@ public int getCourseLimit(){
 			return false;
 		if (numDesiredCourse != other.numDesiredCourse)
 			return false;
-		if (preferredCources == null) {
-			if (other.preferredCources != null)
+		if (preferredCourses == null) {
+			if (other.preferredCourses != null)
 				return false;
-		} else if (!preferredCources.equals(other.preferredCources))
+		} else if (!preferredCourses.equals(other.preferredCourses))
 			return false;
 		if (rcmCources == null) {
 			if (other.rcmCources != null)

@@ -33,7 +33,7 @@ public class Helper {
 		preferredCourses.add("1");	// 1 = Eng 101 	- preference 1
 		preferredCourses.add("2"); 	// 2 = Math 101	- preference 2	
 		preferredCourses.add("3"); 	// 3 = Soc 101	- preference 3
-		student.setPreferredCources(preferredCourses);
+		student.setPreferredCourses(preferredCourses);
 		student.setCourseTaken(Arrays.asList("4", "5", "6"));	// 4=Eng 100, 5=Math 100, and 6=Soc 100
 		students.add(student); 
 		
@@ -46,7 +46,7 @@ public class Helper {
 		preferredCourses.add("1");	// 1 = Eng 101 	- preference 1
 		preferredCourses.add("2"); 	// 2 = Math 101	- preference 2	
 		preferredCourses.add("3"); 	// 3 = Soc 101	- preference 3
-		student.setPreferredCources(preferredCourses);
+		student.setPreferredCourses(preferredCourses);
 		student.setCourseTaken(Arrays.asList("4", "5", "6"));	// 4=Eng 100, 5=Math 100, and 6=Soc 100
 		students.add(student);
 		
@@ -59,7 +59,7 @@ public class Helper {
 		preferredCourses.add("1");	// 1 = Eng 101 	- preference 1
 		preferredCourses.add("3"); 	// 3 = Soc 101	- preference 2
 		preferredCourses.add("2"); 	// 2 = Math 101	- preference 3	
-		student.setPreferredCources(preferredCourses);
+		student.setPreferredCourses(preferredCourses);
 		student.setCourseTaken(Arrays.asList("4", "5", "6"));	// 4=Eng 100, 5=Math 100, and 6=Soc 100
 		students.add(student); 
 		

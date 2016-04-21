@@ -115,7 +115,7 @@ public class Scheduler implements Engine{
 			studentCourseResults = model.get(GRB.DoubleAttr.X, studentCourseVars);
 			for(int i=0; i<studentCount; i++){
 				student = studentMap.get(i);
-				studentPreference.put(student.getId(), student.getPreferredCources()); 
+				studentPreference.put(student.getId(), student.getPreferredCourses()); 
 				studentRecommendation.put(student.getId(), new ArrayList<String>()); 
 				for(int j=0; j<courseCount; j++){
 					if(studentCourseResults[i][j] > 0){

@@ -9,7 +9,7 @@ import com.mongodb.client.MongoDatabase;
 public class MongoConnection {
 	private static MongoConnection mongoConnection;
 	private static MongoClient mongoClient;
-	private static MongoDatabase mongoDatabase;
+	private MongoDatabase mongoDatabase;
 	private MongoConnection()
 	{
         String host = System.getenv("MONGO_HOST");
@@ -37,6 +37,7 @@ public class MongoConnection {
 	}
 	public MongoCollection<Document> getCollection(String collection)
 	{
+		mongoDatabase= mongoClient.getDatabase("6310Project3");
 		return mongoDatabase.getCollection(collection);
 	}
 	

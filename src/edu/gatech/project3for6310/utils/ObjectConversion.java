@@ -24,7 +24,7 @@ public class ObjectConversion {
 				   .append("fullName", student.getFullName())
 				   .append("email", student.getEmail())
 		           .append("numDesiredCourse", student.getNumDesiredCourse())
-				   .append("preferredCourses", student.getPreferredCources())
+				   .append("preferredCourses", student.getPreferredCourses())
 				   .append("requestId",student.getRequestId())
 				   .append("rcmCources",student.getRcmCources())
 				   .append("isSimulated", student.getIsSimulated())
@@ -43,7 +43,7 @@ public class ObjectConversion {
 		stu.setFullName(doc.getString("fullName"));
 		stu.setEmail(doc.getString("email"));
 		stu.setNumDesiredCourse(doc.getInteger("numDesiredCourse"));
-		stu.setPreferredCources(preferredCourses);
+		stu.setPreferredCourses(preferredCourses);
 		stu.setRequestId(doc.getString("requestId"));
 		stu.setRcmCources(rcmCourses);
 		stu.setIsSimulated(doc.getBoolean("isSimulated"));

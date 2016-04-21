@@ -244,7 +244,7 @@ public class DatabaseOperations {
 		    		 coursesTaken.add(student[i]);
 		    	 }
 		    	 newStudent.setCourseTaken(coursesTaken);  	 
-		    	 newStudent.setPreferredCources(requestMap.get(id));
+		    	 newStudent.setPreferredCourses(requestMap.get(id));
 		    	 newStudent.setNumDesiredCourse(2);
 		    	 Document doc= ObjectConversion.studentToDocument(newStudent);
 		    	 userCollection.insertOne(doc);
