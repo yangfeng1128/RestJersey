@@ -11,23 +11,14 @@ import edu.gatech.project3for6310.dbconnection.MongoConnection;
 import edu.gatech.project3for6310.entity.User;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
-public class UserDAO {
+public interface UserDAO {
 	
-	private static BasicDAO<User> dao = new BasicDAO<User>(User.class);
-	public List<Document> getAllUsers() {
-		return dao.getAll();
-		
-	}
+	
+	public List<Document> getAllUsers(); 
 
-	public Document getOneUser(String username) {
-		return dao.getByUserName(username);
-	}
+	public Document getOneUser(String username); 
 
-	public boolean updateUser(String id, User user) {
-		Document doc = ObjectConversion.userToDocument(user);
-		dao.updateById(id, doc);
-		return true;
-	}
+	public boolean updateUser(String id, User user); 
 	
 
 }

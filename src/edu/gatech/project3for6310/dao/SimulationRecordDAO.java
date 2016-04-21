@@ -6,26 +6,13 @@ import org.bson.Document;
 
 import edu.gatech.project3for6310.entity.SimulationRecord;
 
-public class SimulationRecordDAO {
+public interface SimulationRecordDAO {
 
-	private static BasicDAO<SimulationRecord> dao = new BasicDAO<SimulationRecord>(SimulationRecord.class);
-	public List<Document> getAllSimulationRecords() {
-		return dao.getAll();
-		
-	}
+	
+	public List<Document> getAllSimulationRecords(); 
 
-	public Document getOneSimulationRecord(String id) {
-		return dao.getById(id);
-	}
+	public Document getOneSimulationRecord(String id); 
 
-	public void create(Document srDoc) {
-		try{
-		 dao.save(srDoc);	
-		}catch(Exception e)
-		{
-			
-		}
-		
-	}
+	public void create(Document srDoc); 
 
 }

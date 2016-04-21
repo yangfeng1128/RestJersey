@@ -19,14 +19,15 @@ import org.json.JSONArray;
 import com.sun.jersey.spi.inject.Inject;
 
 import edu.gatech.project3for6310.dao.CourseDAO;
+import edu.gatech.project3for6310.dao.CourseDAOImpl;
 import edu.gatech.project3for6310.entity.Course;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
 @Path("/courses")
 public class CourseService {
 
-	@Inject
-	private static CourseDAO courseDAO;
+	
+	private static CourseDAO courseDAO = new CourseDAOImpl();
 	
 	@Path("/all")
 	@GET

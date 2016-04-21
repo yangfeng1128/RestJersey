@@ -14,12 +14,13 @@ import org.bson.Document;
 import com.sun.jersey.spi.inject.Inject;
 
 import edu.gatech.project3for6310.dao.UserDAO;
+import edu.gatech.project3for6310.dao.UserDAOImpl;
 import edu.gatech.project3for6310.entity.User;
 
 @Path("/user")
 public class UserService {
-	@Inject
-	private static UserDAO userDAO;
+	
+	private static UserDAO userDAO=new UserDAOImpl();
 	
 	@Path("/authenticate")
 	@POST

@@ -20,13 +20,14 @@ import org.json.JSONArray;
 import com.sun.jersey.spi.inject.Inject;
 
 import edu.gatech.project3for6310.dao.TeachingAssistantDAO;
+import edu.gatech.project3for6310.dao.TeachingAssistantDAOImpl;
 import edu.gatech.project3for6310.entity.TeachingAssistant;
 
 @Path("/teachingassistants")
 public class TeachingAssistantService {
  
-	@Inject
-	private static TeachingAssistantDAO teachingAssistantDAO;
+	
+	private static TeachingAssistantDAO teachingAssistantDAO= new TeachingAssistantDAOImpl();
 	
 	@Path("/all")
 	@GET

@@ -7,37 +7,15 @@ import org.bson.Document;
 import edu.gatech.project3for6310.entity.Course;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
-public class CourseDAO {
-    private static BasicDAO<Course> dao = new BasicDAO<Course>(Course.class);
+public interface CourseDAO {
+  
 	
-	public List<Document> getAllCourses() {	
-		return dao.getAll();
-	}
+	public List<Document> getAllCourses(); 
 
-	public Document getOneCourse(String id) {
-		
-		return dao.getById(id);
-	}
-
-
-	public boolean updateCourse(String id, Course course) {
-		try{
-		Document doc = ObjectConversion.courseToDocument(course);
-		dao.updateById(id, doc);
-		return true;
-		} catch(Exception e)
-		{
-		return false;
-		}
-	}
-	public void updateCourse(String id,Document doc) {
-		try{
+	public Document getOneCourse(String id); 
 	
-		dao.updateById(id, doc);
 
-		} catch(Exception e)
-		{
 
-		}
-	}
+	public boolean updateCourse(String id, Course course); 
+	public void updateCourse(String id,Document doc); 
 }

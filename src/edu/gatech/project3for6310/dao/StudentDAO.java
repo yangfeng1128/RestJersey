@@ -18,42 +18,18 @@ import edu.gatech.project3for6310.entity.Student;
 import edu.gatech.project3for6310.entity.Student;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
-public class StudentDAO {
-	private static BasicDAO<Student> dao = new BasicDAO<Student>(Student.class);
-	public List<Document> getAllStudents() {
-		return dao.getAll();
-		
-	}
-
-	public Document getOneStudent(String id) {
-		return dao.getById(id);
-	}
-
-	public boolean updateStudent(String id, Student student) {
-		try{
-		Document doc = ObjectConversion.studentToDocument(student);
-		dao.updateById(id, doc);
-		return true;
-		} catch( Exception e)
-		{
-			return false;
-		}
-	}
+public interface StudentDAO {
 	
-	public boolean saveOneStudent(Document doc)
-	{
-		try{
-		dao.save(doc);
-		return true;
-		} catch(Exception e)
-		{
-		return false; 	
-		}
-	}
+	public List<Document> getAllStudents();
 
-	public void updateStudent(String id, Document sDoc) {
-		dao.updateById(id, sDoc);	
-	}
+	public Document getOneStudent(String id);
+
+	public boolean updateStudent(String id, Student student);
+	
+	public boolean saveOneStudent(Document doc);
+	
+
+	public void updateStudent(String id, Document sDoc); 
 
 	
 	

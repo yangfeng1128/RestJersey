@@ -24,6 +24,7 @@ import com.mongodb.client.MongoDatabase;
 import com.sun.jersey.spi.inject.Inject;
 
 import edu.gatech.project3for6310.dao.StudentDAO;
+import edu.gatech.project3for6310.dao.StudentDAOImpl;
 import edu.gatech.project3for6310.dbconnection.MongoConnection;
 import edu.gatech.project3for6310.entity.Student;
 import edu.gatech.project3for6310.utils.ObjectConversion;
@@ -31,8 +32,8 @@ import edu.gatech.project3for6310.utils.ObjectConversion;
 @Path("/students")
 public class StudentService {
 	
-	@Inject
-	private static StudentDAO studentDAO;
+	
+	private static StudentDAO studentDAO = new StudentDAOImpl();
 	private static SimulationService simulationService = SimulationService.getInstance();
 	
 	@Path("/all")

@@ -18,13 +18,14 @@ import org.json.JSONArray;
 import com.sun.jersey.spi.inject.Inject;
 
 import edu.gatech.project3for6310.dao.SimulationRecordDAO;
+import edu.gatech.project3for6310.dao.SimulationRecordDAOImpl;
 import edu.gatech.project3for6310.entity.SimulationRecord;
 
 @Path("/simulationrecords")
 public class SimulationRecordService {
 
-	@Inject
-	private static SimulationRecordDAO simulationRecordDAO;
+	
+	private static SimulationRecordDAO simulationRecordDAO =new SimulationRecordDAOImpl();
 	
 	@Path("/all")
 	@GET

@@ -18,13 +18,14 @@ import org.json.JSONArray;
 import com.sun.jersey.spi.inject.Inject;
 
 import edu.gatech.project3for6310.dao.ProfessorDAO;
+import edu.gatech.project3for6310.dao.ProfessorDAOImpl;
 import edu.gatech.project3for6310.entity.Professor;
 
 @Path("/professors")
 public class ProfessorService {
 
-	@Inject
-	private static ProfessorDAO professorDAO;
+	
+	private static ProfessorDAO professorDAO = new ProfessorDAOImpl();
 	
 	@Path("/all")
 	@GET
