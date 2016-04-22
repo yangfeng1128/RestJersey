@@ -89,13 +89,23 @@ public class StudentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateStudent(@PathParam("id") String id, Student student){
+		JSONObject sb= new JSONObject();
+		if (id.equals(student.getId()))
+				{
+			sb.put("error", "request student id does not match student information");
+			return Response.status(400).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
+	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+	                .header("Access-Control-Allow-Credentials", "true")
+	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+	                .header("Access-Control-Max-Age", "1209600").build();
+				}
 		String requestId ="student_"+id+"_"+String.valueOf(System.currentTimeMillis());
 		student.setIsSimulated(false);
 		student.setRequestId(requestId);
 		boolean success=studentDAO.updateStudent(id, student);
 		simulationService.addStudentRequest(requestId);
 		SimulationService.start();
-		JSONObject sb= new JSONObject();
+		
 		
 	    String res = null;
 	    if (success)
