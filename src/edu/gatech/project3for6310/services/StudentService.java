@@ -90,7 +90,7 @@ public class StudentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateStudent(@PathParam("id") String id, Student student){
 		JSONObject sb= new JSONObject();
-		if (id.equals(student.getId()))
+		if (!id.equals(student.getId()))
 				{
 			sb.put("error", "request student id does not match student information");
 			return Response.status(400).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")

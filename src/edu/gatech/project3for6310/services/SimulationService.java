@@ -2,7 +2,10 @@ package edu.gatech.project3for6310.services;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +127,10 @@ public class SimulationService {
 			long count=simulationrecorddao.count();
 			count++;	
 	        sr.setId(String.valueOf(count));
+	        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	        Calendar cal = Calendar.getInstance();
+	        String simulatedTime = dateFormat.format(cal.getTime()).toString();
+	        sr.setSimulatedTime(simulatedTime);
 			
 			Document srDoc= ObjectConversion.simulationRecordToDocument(sr);
 			simulationrecorddao.insertOne(srDoc);
