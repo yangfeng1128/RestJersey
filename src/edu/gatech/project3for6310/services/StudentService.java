@@ -47,11 +47,7 @@ public class StudentService {
 		{
 			sb.put(d);
 		}
-		return Response.status(200).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-	            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	            .header("Access-Control-Allow-Credentials", "true")
-	            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	            .header("Access-Control-Max-Age", "1209600").build();
+		return Response.status(200).entity(sb.toString()).build();
 	}
 	
 	@Path("/{id}")
@@ -71,17 +67,9 @@ public class StudentService {
 			*/
 			JSONObject sb = new JSONObject();
 			sb.append("Exception:", "not found.");
-			return Response.status(404).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-		            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-		            .header("Access-Control-Allow-Credentials", "true")
-		            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-		            .header("Access-Control-Max-Age", "1209600").build();
+			return Response.status(404).entity(sb.toString()).build();
 		}
-		return Response.status(200).entity(student.toJson()).header("Access-Control-Allow-Origin", "*")
-	            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	            .header("Access-Control-Allow-Credentials", "true")
-	            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	            .header("Access-Control-Max-Age", "1209600").build();
+		return Response.status(200).entity(student.toJson()).build();
 	}
 	
 	@Path("/{id}")
@@ -93,11 +81,7 @@ public class StudentService {
 		if (!id.equals(student.getId()))
 				{
 			sb.put("error", "request student id does not match student information");
-			return Response.status(400).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+			return Response.status(400).entity(sb.toString()).build();
 				}
 		String requestId ="student_"+id+"_"+String.valueOf(System.currentTimeMillis());
 		student.setIsSimulated(false);
@@ -112,19 +96,11 @@ public class StudentService {
 	    {
 	    	res="updated successfully";
 	    	sb.put("result", res);
-	    	return Response.status(200).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").header("isUpdated",success).build();
+	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
 	    	sb.put("result", res);
-	    	return Response.status(400).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").header("isUpdated", success).build();
+	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		
 	}

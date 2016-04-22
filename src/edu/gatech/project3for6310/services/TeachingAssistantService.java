@@ -40,11 +40,7 @@ public class TeachingAssistantService {
 		{
 			sb.put(d);
 		}
-		return Response.status(200).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600").build();
+		return Response.status(200).entity(sb.toString()).build();
 	}
 	
 	@Path("/{id}")
@@ -57,11 +53,7 @@ public class TeachingAssistantService {
 		{
 			return Response.status(404).build();
 		}
-		return Response.status(200).entity(teachingAssistant.toJson()).header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600").build();
+		return Response.status(200).entity(teachingAssistant.toJson()).build();
 	}
 	
 	@Path("/{id}")
@@ -76,18 +68,10 @@ public class TeachingAssistantService {
 	    {
 	    	res="updated successfully";
 	    	sb.put("result", res);
-	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
-	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
 	    }
 		
 	}
@@ -104,18 +88,10 @@ public class TeachingAssistantService {
 	    {
 	    	res="created successfully";
 	    	sb.put("result", res);
-	    	return Response.status(200).entity(sb.toString()).header("isCreated",success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(200).entity(sb.toString()).header("isCreated",success).build();
 	    } else {
 	    	res="not created";
-	    	return Response.status(400).entity(sb.toString()).header("isCreated", success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(400).entity(sb.toString()).header("isCreated", success).build();
 	    }
 		
 	}
@@ -132,18 +108,10 @@ public class TeachingAssistantService {
 	    {
 	    	res="deleted successfully";
 	    	sb.put("result", res);
-	    	return Response.status(200).entity(sb.toString()).header("isDeleted",success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(200).entity(sb.toString()).header("isDeleted",success).build();
 	    } else {
 	    	res="not deleted";
-	    	return Response.status(400).entity(sb.toString()).header("isDeleted", success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(400).entity(sb.toString()).header("isDeleted", success).build();
 	    }
 		
 	}

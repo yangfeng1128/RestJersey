@@ -37,18 +37,10 @@ public class UserService {
 
             if (password != null && password.equals(storedPassword)) {
                 userDoc.remove("password");
-                return Response.status(200).entity(userDoc.toJson()).header("Access-Control-Allow-Origin", "*")
-    	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-    	                .header("Access-Control-Allow-Credentials", "true")
-    	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-    	                .header("Access-Control-Max-Age", "1209600").build();
+                return Response.status(200).entity(userDoc.toJson()).build();
             }
         }
 
-		return Response.status(401).header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600").build();	
+		return Response.status(401).build();	
 	}
 }

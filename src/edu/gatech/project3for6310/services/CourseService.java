@@ -40,11 +40,7 @@ public class CourseService {
 		{
 			sb.put(d);
 		}
-		return Response.status(200).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600").build();
+		return Response.status(200).entity(sb.toString()).build();
 	}
 	
 	@Path("/{id}")
@@ -55,17 +51,9 @@ public class CourseService {
 		Document course =courseDAO.getOneCourse(id);
 		if(course ==null)
 		{
-			return Response.status(404).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+			return Response.status(404).build();
 		}
-		return Response.status(200).entity(course.toJson()).header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600").build();
+		return Response.status(200).entity(course.toJson()).build();
 	}
 	
 	@Path("/{id}")
@@ -80,19 +68,11 @@ public class CourseService {
 	    {	
 	    	res="updated successfully";
 	    	sb.put("result", res);
-	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(200).entity(sb.toString()).header("isUpdated",success).build();
 	    } else {
 	    	res="not updated";
 	    	sb.put("result", res);
-	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).header("Access-Control-Allow-Origin", "*")
-	                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-	                .header("Access-Control-Allow-Credentials", "true")
-	                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-	                .header("Access-Control-Max-Age", "1209600").build();
+	    	return Response.status(400).entity(sb.toString()).build();
 	    }
 		
 	}

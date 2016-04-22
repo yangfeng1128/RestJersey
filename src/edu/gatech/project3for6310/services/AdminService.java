@@ -28,11 +28,7 @@ public class AdminService {
 		SimulationService.start();
 		JSONObject sb= new JSONObject();
 		sb.put("result", "submitted");
-	    return Response.status(200).entity(sb.toString()).header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1209600").header("isUpdated",true).build();
+	    return Response.status(200).entity(sb.toString()).header("isUpdated",true).build();
 
 	}
 }
