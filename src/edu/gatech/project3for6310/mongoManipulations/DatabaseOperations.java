@@ -46,6 +46,7 @@ public class DatabaseOperations {
 		loadProfessors();
 		loadTeachingAssistants();
 		loadSimulationRecord();
+		//SimulationService.getInstance().addAdminRequest(""); // added by Monir for testing
 	}
 
 

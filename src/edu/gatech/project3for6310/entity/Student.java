@@ -117,9 +117,6 @@ public class Student {
 	 * @return
 	 */
 	public int getCoursePreferrence(Course course){
-		
-		return Integer.parseInt(course.getId()); 
-		/*
 		int courseCount; 
 		
 		courseCount = this.preferredCourses.size(); 
@@ -128,7 +125,6 @@ public class Student {
 				return i+1; 
 		}  
 		return 100; 
-		*/
 	}
 	
 	public boolean meetsPrerequisites(Course course){

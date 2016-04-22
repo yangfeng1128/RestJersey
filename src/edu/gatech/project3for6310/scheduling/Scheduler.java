@@ -16,8 +16,8 @@ import gurobi.*;
  */
 public class Scheduler implements Engine{
 	
-	final static int STUDENTS_PER_PROFESSOR = 2; 
-	final static int STUDENTS_PER_TA = 2; 
+	final static int STUDENTS_PER_PROFESSOR = 1000000; 
+	final static int STUDENTS_PER_TA = 50; 
 	final static double STUDENT_WEIGHT = 200.0; 
 	
 	private static Scheduler singletonScheduler = new Scheduler(); 
@@ -69,8 +69,8 @@ public class Scheduler implements Engine{
 			// Optimize the model
 			model.optimize(); 
 			simRecord = getSimulation(); 
-			model.write("yourFile.sol"); 
-			model.write("yourFile.lp"); 
+			//model.write("yourFile.sol"); 
+			//model.write("yourFile.lp"); 
 			//return (float) model.get(GRB.DoubleAttr.ObjVal); 
 			return simRecord; 
 			
@@ -435,9 +435,9 @@ public class Scheduler implements Engine{
 	 */
 	private void addStudentsPerTAsLimitConstraint()throws Exception{
 		GRBLinExpr studentExpr1;
-		GRBLinExpr studentExpr2; 
+		//GRBLinExpr studentExpr2; 
 		GRBLinExpr taExpr1; 	// the sum of all TAs teaching a course times the # of students a TA can teach
-		GRBLinExpr taExpr2; 	// the sum of all TAs teaching a course divided by the # of students a TA can teach
+		//GRBLinExpr taExpr2; 	// the sum of all TAs teaching a course divided by the # of students a TA can teach
 		Student student; 
 		Course course;
 		TeachingAssistant ta;
@@ -454,7 +454,7 @@ public class Scheduler implements Engine{
 					continue; 
 				// the following expression is the sum of this course and all students pairs
 				studentExpr1 = new GRBLinExpr(); 
-				studentExpr2 = new GRBLinExpr(); 
+				//studentExpr2 = new GRBLinExpr(); 
 				
 				for(Entry<Integer, Student> studentEntry : studentMap.entrySet()){
 					sKey = studentEntry.getKey(); 
@@ -463,11 +463,11 @@ public class Scheduler implements Engine{
 					if(!student.meetsPrerequisites(course))
 						continue;
 					studentExpr1.addTerm(1.0, studentCourseVars[sKey][cKey]); 
-					studentExpr2.addTerm(1.0/STUDENTS_PER_TA, studentCourseVars[sKey][cKey]);
+					//studentExpr2.addTerm(1.0/STUDENTS_PER_TA, studentCourseVars[sKey][cKey]);
 				}
 				// the following expression is the sum of this course and all TA pairs
 				taExpr1 = new GRBLinExpr(); 
-				taExpr2 = new GRBLinExpr(); 
+				//taExpr2 = new GRBLinExpr(); 
 				for(Entry<Integer, TeachingAssistant> taEntry : teachingAssistantMap.entrySet()){
 					taKey = taEntry.getKey(); 
 					ta = taEntry.getValue(); 
@@ -476,11 +476,12 @@ public class Scheduler implements Engine{
 						continue;
 					
 					taExpr1.addTerm(STUDENTS_PER_TA, courseTaVars[cKey][taKey]); 
-					taExpr2.addTerm(1.0, courseTaVars[cKey][taKey]); 
+					//taExpr2.addTerm(1.0, courseTaVars[cKey][taKey]); 
 				}
 				model.addConstr(studentExpr1, GRB.LESS_EQUAL, taExpr1, "studentsPerTAsLimit_C" + cKey); 
-				studentExpr2.addConstant(0.99999);
-				model.addConstr(taExpr2, GRB.LESS_EQUAL, studentExpr2, "TAsLessThanStudent_C" + cKey); 
+				//studentExpr2.addConstant(0.99999);
+				studentExpr1.addConstant(STUDENTS_PER_TA-1);
+				model.addConstr(taExpr1, GRB.LESS_EQUAL, studentExpr1, "TAsLessThanStudent_C" + cKey); 
 			}
 		}catch(Exception ex){
 			throw new Exception(ex.getMessage()); 

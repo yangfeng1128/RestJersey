@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import edu.gatech.project3for6310.entity.*;
+import edu.gatech.project3for6310.scheduling.Scheduler;
 
 public class Helper {
 	
@@ -172,5 +174,41 @@ public class Helper {
 		courses.add(course); 
 		
 		return courses; 
+	}
+	
+	// method added by Monir
+	public void testScheduler(SimulationRecord simRecord){
+		Map<String, List<String>> studentRecommendations; 
+		Map<String, List<String>> professorRecommendations; 
+		Map<String, List<String>> taRecommendations; 
+		
+		try { 
+			if(simRecord != null){
+				studentRecommendations = simRecord.getStudentRecommendation(); 
+				System.out.println("\n************** Student Recommendations **************");
+				for(Entry<String, List<String>> studentEntry : studentRecommendations.entrySet()){
+					System.out.println("[Student With ID: " + studentEntry.getKey() + 
+							"] Takes Courses: [" + String.join(",", studentEntry.getValue()) + "]");
+				}
+				
+				professorRecommendations = simRecord.getProfessorAssignment(); 
+				System.out.println("\n************** Professor Recommendations **************"); 
+				for(Entry<String, List<String>> professorEntry : professorRecommendations.entrySet()){
+					System.out.println("[Professor With ID: " + professorEntry.getKey() +
+							"] Teaches Courses: [" + String.join(",", professorEntry.getValue()) + "]"); 
+				}
+				
+				taRecommendations = simRecord.getTaAssignment(); 
+				System.out.println("\n************** TA Recommendations *****************"); 
+				for(Entry<String, List<String>> taEntry : taRecommendations.entrySet()){
+					System.out.println("[TA With ID: " + taEntry.getKey() +
+							"] Teaches Courses: [" + String.join(",", taEntry.getValue()) + "]"); 
+				}
+			}else{
+				System.out.println("SimulationRecord return null!");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

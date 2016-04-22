@@ -27,6 +27,7 @@ import edu.gatech.project3for6310.entity.SimulationRecord;
 import edu.gatech.project3for6310.entity.Student;
 import edu.gatech.project3for6310.entity.TeachingAssistant;
 import edu.gatech.project3for6310.scheduling.Scheduler;
+import edu.gatech.project3for6310.utils.Helper;
 import edu.gatech.project3for6310.utils.ObjectConversion;
 
 public class SimulationService {
@@ -66,6 +67,7 @@ public class SimulationService {
 			Runnable task= new Simulate();
 			thread= new Thread(task);
 			thread.start();	
+			//thread.run(); // added by Monir for testing
 		}
 			
 	}
@@ -105,6 +107,9 @@ public class SimulationService {
 				adminModeQueue.drainTo(adminrequests);
 				createSimulationObjects(studentrequests,adminrequests);
 				SimulationRecord sr = studentEngine.getSimulationResult(students, courses, professors, teachingassistants);
+				
+				//Helper.getInstance().testScheduler(sr); // added by Monir for testing
+				
 				updateDatabase(studentrequests,sr);
 			  	
 			  if 	(studentModeQueue.size() ==0 && adminModeQueue.size()==0)
