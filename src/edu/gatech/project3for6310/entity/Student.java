@@ -139,7 +139,13 @@ public class Student {
  * @return
  */
 public int getCourseLimit(){
+	int size = this.courseTaken.size();
+	if (size>=2)
+	{
+		return Math.min(2, this.numDesiredCourse);
+	} else{
 	return 1; 
+	}
 }
 
 	@Override
