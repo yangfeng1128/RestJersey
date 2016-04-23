@@ -123,7 +123,7 @@ public class SimulationService {
 		private static void updateDatabase(List<String>studentrequests, SimulationRecord sr) {
 			if (sr==null)return;
 			 Map<String, List<String>> requestMap=sr.getStudentPreference();
-			 Map<String, List<String>> courseRecommended=sr.getStudentPreference();
+			 Map<String, List<String>> courseRecommended=sr.getStudentRecommendation();
 			 Map<String, List<String>> professorAssignment=sr.getProfessorAssignment();
 			 Map<String, List<String>> tAAssignment=sr.getTaAssignment();
 			 
