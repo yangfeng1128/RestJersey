@@ -21,7 +21,7 @@ import edu.gatech.project3for6310.utils.ObjectConversion;
 public class UserDAOImpl implements UserDAO{
 	private static  MongoClient mongoClient =MongoConnection.getInstance().getClient();
 	private static MongoDatabase db =mongoClient.getDatabase("6310Project3");
-	private static MongoCollection<Document> collection=db.getCollection("course");
+	private static MongoCollection<Document> collection=db.getCollection("user");
 	
 	
 	public List<Document> getAllUsers() {
