@@ -16,7 +16,9 @@ public interface UserDAO {
 	
 	public List<Document> getAllUsers(); 
 
-	public Document getOneUser(String username); 
+	public Document getOneUser(String username);
+
+	public Document getOneUserById(String id);
 
 	public boolean updateUser(String id, User user); 
 	

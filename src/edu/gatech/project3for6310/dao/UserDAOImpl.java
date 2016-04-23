@@ -40,6 +40,10 @@ public class UserDAOImpl implements UserDAO{
 		return collection.find(eq("username", username)).projection(excludeId()).first();
 	}
 
+	public Document getOneUserById(String id) {
+		return collection.find(eq("id", id)).projection(excludeId()).first();
+	}
+
 	public boolean updateUser(String id, User user) {
 		Document doc = ObjectConversion.userToDocument(user);
 		collection.replaceOne(eq("id",id), doc);
