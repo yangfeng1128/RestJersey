@@ -3,7 +3,9 @@ package edu.gatech.project3for6310.services;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -57,6 +59,25 @@ public class CourseService {
 	}
 	
 	@Path("/{id}")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createCourse(@PathParam("id") String id, Course course){
+		boolean success=courseDAO.createCourse(id, course);
+	    String res = null;
+	    JSONObject sb = new JSONObject();
+	    if (success)
+	    {
+	    	res="created successfully";
+	    	sb.put("result", res);
+	    	return Response.status(200).entity(sb.toString()).header("isCreated",success).build();
+	    } else {
+	    	res="not created";
+	    	return Response.status(400).entity(sb.toString()).header("isCreated", success).build();
+	    }
+		
+	}
+	@Path("/{id}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,6 +94,26 @@ public class CourseService {
 	    	res="not updated";
 	    	sb.put("result", res);
 	    	return Response.status(400).entity(sb.toString()).build();
+	    }
+		
+	}
+	
+	@Path("/{id}")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCourse(@PathParam("id") String id){
+		boolean success=courseDAO.deleteCourse(id);
+	    String res = null;
+	    JSONObject sb = new JSONObject();
+	    if (success)
+	    {
+	    	res="deleted successfully";
+	    	sb.put("result", res);
+	    	return Response.status(200).entity(sb.toString()).header("isDeleted",success).build();
+	    } else {
+	    	res="not deleted";
+	    	return Response.status(400).entity(sb.toString()).header("isDeleted", success).build();
 	    }
 		
 	}

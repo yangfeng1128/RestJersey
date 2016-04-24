@@ -60,4 +60,27 @@ public class CourseDAOImpl implements CourseDAO {
 
 		}
 	}
+
+	@Override
+	public boolean createCourse(String id, Course course) {
+		try{
+			Document doc = ObjectConversion.courseToDocument(course);
+			collection.insertOne(doc);
+			return true;
+			} catch (Exception e)
+			{
+				return false;
+			}
+	}
+
+	@Override
+	public boolean deleteCourse(String id) {
+		try{
+			collection.deleteOne(eq("id", id));
+		return true;
+		} catch (Exception e)
+		{
+			return false;
+		}
+	}
 }

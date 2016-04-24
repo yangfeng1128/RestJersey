@@ -62,4 +62,27 @@ public class ProfessorDAOImpl implements ProfessorDAO {
 		
 	}
 
+	@Override
+	public boolean createProfessor(String id, Professor professor) {
+		try{
+			Document doc = ObjectConversion.professorToDocument(professor);
+			collection.insertOne(doc);
+			return true;
+			} catch (Exception e)
+			{
+				return false;
+			}
+	}
+	
+	@Override
+	public boolean deleteProfessor(String id) {
+		try{
+			collection.deleteOne(eq("id", id));
+		return true;
+		} catch (Exception e)
+		{
+			return false;
+		}
+	}
+
 }

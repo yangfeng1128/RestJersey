@@ -17,5 +17,9 @@ public interface ProfessorDAO {
 
 	public boolean updateProfessor(String id, Professor professor); 
 
-	public void updateProfessor(String id, Document pDoc); 
+	public void updateProfessor(String id, Document pDoc);
+
+	public boolean createProfessor(String id, Professor professor);
+
+	boolean deleteProfessor(String id); 
 }

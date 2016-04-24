@@ -17,5 +17,9 @@ public interface CourseDAO {
 
 
 	public boolean updateCourse(String id, Course course); 
-	public void updateCourse(String id,Document doc); 
+	public void updateCourse(String id,Document doc);
+
+	public boolean createCourse(String id, Course course);
+
+	public boolean deleteCourse(String id); 
 }

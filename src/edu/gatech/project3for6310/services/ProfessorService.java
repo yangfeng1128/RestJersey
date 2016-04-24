@@ -3,7 +3,9 @@ package edu.gatech.project3for6310.services;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -20,6 +22,7 @@ import com.sun.jersey.spi.inject.Inject;
 import edu.gatech.project3for6310.dao.ProfessorDAO;
 import edu.gatech.project3for6310.dao.ProfessorDAOImpl;
 import edu.gatech.project3for6310.entity.Professor;
+import edu.gatech.project3for6310.entity.TeachingAssistant;
 
 @Path("/professors")
 public class ProfessorService {
@@ -55,6 +58,26 @@ public class ProfessorService {
 	}
 	
 	@Path("/{id}")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createProfessor(@PathParam("id") String id, Professor professor){
+		boolean success=professorDAO.createProfessor(id, professor);
+	    String res = null;
+	    JSONObject sb = new JSONObject();
+	    if (success)
+	    {
+	    	res="created successfully";
+	    	sb.put("result", res);
+	    	return Response.status(200).entity(sb.toString()).header("isCreated",success).build();
+	    } else {
+	    	res="not created";
+	    	return Response.status(400).entity(sb.toString()).header("isCreated", success).build();
+	    }
+		
+	}
+	
+	@Path("/{id}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -71,6 +94,27 @@ public class ProfessorService {
 	    	res="not updated";
 	    	sb.put("result", res);
 	    	return Response.status(400).entity(sb.toString()).header("isUpdated", success).build();
+	    }
+		
+	}
+	
+	
+	@Path("/{id}")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteProfessor(@PathParam("id") String id){
+		boolean success=professorDAO.deleteProfessor(id);
+	    String res = null;
+	    JSONObject sb = new JSONObject();
+	    if (success)
+	    {
+	    	res="deleted successfully";
+	    	sb.put("result", res);
+	    	return Response.status(200).entity(sb.toString()).header("isDeleted",success).build();
+	    } else {
+	    	res="not deleted";
+	    	return Response.status(400).entity(sb.toString()).header("isDeleted", success).build();
 	    }
 		
 	}
