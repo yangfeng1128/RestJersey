@@ -218,6 +218,11 @@ public class SimulationService {
 					 cDoc.put("assignedProfessor", courseProfMap.get(id));
 					 cDoc.put("assignedTA", courseTaMap.get(id));
 					 coursedao.replaceOne(eq("id",id), cDoc);
+				 } else {
+					 cDoc.put("isOffered", false);
+					 cDoc.put("assignedProfessor", null);
+					 cDoc.put("assignedTA", null);
+					 coursedao.replaceOne(eq("id",id), cDoc);
 				 }
 			 }
 		}
